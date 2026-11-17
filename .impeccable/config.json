@@ -1,0 +1,98 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "nested-cards",
+        "value": "*",
+        "files": [
+          "design/reference/roadmap_ruta_de_aprendizaje/code.html"
+        ],
+        "createdAt": "2026-11-17T22:19:35.685Z",
+        "reason": "orchestrator: owner-supplied reference mock exported from Stitch, kept read-only for comparison, not shipped"
+      },
+      {
+        "rule": "flat-type-hierarchy",
+        "value": "*",
+        "files": [
+          "design/reference/roadmap_ruta_de_aprendizaje/code.html"
+        ],
+        "createdAt": "2026-11-17T22:19:35.703Z",
+        "reason": "orchestrator: owner-supplied reference mock exported from Stitch, kept read-only for comparison, not shipped"
+      },
+      {
+        "rule": "nested-cards",
+        "value": "*",
+        "files": [
+          "design/reference/lecci_n_emparejar_pares/code.html"
+        ],
+        "createdAt": "2026-11-17T22:19:35.725Z",
+        "reason": "orchestrator: owner-supplied reference mock exported from Stitch, kept read-only for comparison, not shipped"
+      },
+      {
+        "rule": "flat-type-hierarchy",
+        "value": "*",
+        "files": [
+          "design/reference/lecci_n_emparejar_pares/code.html"
+        ],
+        "createdAt": "2026-11-17T22:19:35.743Z",
+        "reason": "orchestrator: owner-supplied reference mock exported from Stitch, kept read-only for comparison, not shipped"
+      },
+      {
+        "rule": "nested-cards",
+        "value": "*",
+        "files": [
+          "design/reference/lecci_n_escucha_r_pida/code.html"
+        ],
+        "createdAt": "2026-11-17T22:19:35.759Z",
+        "reason": "orchestrator: owner-supplied reference mock exported from Stitch, kept read-only for comparison, not shipped"
+      },
+      {
+        "rule": "flat-type-hierarchy",
+        "value": "*",
+        "files": [
+          "design/reference/lecci_n_escucha_r_pida/code.html"
+        ],
+        "createdAt": "2026-11-17T22:19:35.774Z",
+        "reason": "orchestrator: owner-supplied reference mock exported from Stitch, kept read-only for comparison, not shipped"
+      },
+      {
+        "rule": "nested-cards",
+        "value": "*",
+        "files": [
+          "design/reference/lecci_n_retroalimentaci_n_inmediata/code.html"
+        ],
+        "createdAt": "2026-11-17T22:19:35.788Z",
+        "reason": "orchestrator: owner-supplied reference mock exported from Stitch, kept read-only for comparison, not shipped"
+      },
+      {
+        "rule": "flat-type-hierarchy",
+        "value": "*",
+        "files": [
+          "design/reference/lecci_n_retroalimentaci_n_inmediata/code.html"
+        ],
+        "createdAt": "2026-11-17T22:19:35.803Z",
+        "reason": "orchestrator: owner-supplied reference mock exported from Stitch, kept read-only for comparison, not shipped"
+      },
+      {
+        "rule": "nested-cards",
+        "value": "*",
+        "files": [
+          "design/reference/lecci_n_resumen_y_repaso/code.html"
+        ],
+        "createdAt": "2026-11-17T22:19:35.817Z",
+        "reason": "orchestrator: owner-supplied reference mock exported from Stitch, kept read-only for comparison, not shipped"
+      },
+      {
+        "rule": "flat-type-hierarchy",
+        "value": "*",
+        "files": [
+          "design/reference/lecci_n_resumen_y_repaso/code.html"
+        ],
+        "createdAt": "2026-11-17T22:19:35.832Z",
+        "reason": "orchestrator: owner-supplied reference mock exported from Stitch, kept read-only for comparison, not shipped"
+      }
+    ]
+  }
+}

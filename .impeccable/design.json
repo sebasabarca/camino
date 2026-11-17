@@ -1,0 +1,560 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-17T22:32:01+00:00",
+  "title": "Design System: Camino con Mushroom",
+  "extensions": {
+    "colorMeta": {
+      "terra": {
+        "role": "primary",
+        "displayName": "Terracotta Clay",
+        "canonical": "#c85a32",
+        "tonalRamp": [
+          "#200000",
+          "#490b00",
+          "#742300",
+          "#a03d16",
+          "#c7603b",
+          "#e58a6a",
+          "#ffb49a",
+          "#ffe0cc"
+        ]
+      },
+      "terra-deep": {
+        "role": "primary",
+        "displayName": "Fired Terracotta",
+        "canonical": "#9f3c16",
+        "tonalRamp": [
+          "#1f0000",
+          "#470e00",
+          "#712608",
+          "#9d411f",
+          "#c36342",
+          "#e18c6f",
+          "#fdb59d",
+          "#ffe1cf"
+        ]
+      },
+      "terra-baseline": {
+        "role": "primary",
+        "displayName": "Kiln Baseline",
+        "canonical": "#7a2a0c",
+        "tonalRamp": [
+          "#1d0200",
+          "#421404",
+          "#6b2d18",
+          "#95482e",
+          "#ba694f",
+          "#d99079",
+          "#f6b9a5",
+          "#ffe3d4"
+        ]
+      },
+      "terra-wash": {
+        "role": "primary",
+        "displayName": "Terracotta Wash",
+        "canonical": "#faeee9",
+        "tonalRamp": [
+          "#0e0a09",
+          "#292421",
+          "#48403d",
+          "#685f5b",
+          "#8a807c",
+          "#aca39f",
+          "#cfc7c4",
+          "#f3edeb"
+        ]
+      },
+      "canela": {
+        "role": "tertiary",
+        "displayName": "Canela Sun",
+        "canonical": "#e5a93c",
+        "tonalRamp": [
+          "#190600",
+          "#3c1d00",
+          "#613700",
+          "#885500",
+          "#ac7700",
+          "#cb9c4d",
+          "#e9c385",
+          "#ffeabf"
+        ]
+      },
+      "canela-deep": {
+        "role": "tertiary",
+        "displayName": "Canela Bark",
+        "canonical": "#7e5700",
+        "tonalRamp": [
+          "#150800",
+          "#362000",
+          "#593c00",
+          "#7e5a13",
+          "#a17b3b",
+          "#c19f6a",
+          "#e1c59a",
+          "#ffebcc"
+        ]
+      },
+      "canela-wash": {
+        "role": "tertiary",
+        "displayName": "Canela Glow",
+        "canonical": "#fff8ec",
+        "tonalRamp": [
+          "#0d0b08",
+          "#28251f",
+          "#46413a",
+          "#666057",
+          "#878278",
+          "#a9a49b",
+          "#cdc8c1",
+          "#f1eee9"
+        ]
+      },
+      "agave": {
+        "role": "secondary",
+        "displayName": "Agave",
+        "canonical": "#5b7c65",
+        "tonalRamp": [
+          "#040e07",
+          "#182a1e",
+          "#304938",
+          "#4b6a55",
+          "#6c8b75",
+          "#92ad99",
+          "#b9d0bf",
+          "#e3f3e7"
+        ]
+      },
+      "agave-deep": {
+        "role": "secondary",
+        "displayName": "Deep Agave",
+        "canonical": "#43634d",
+        "tonalRamp": [
+          "#040e07",
+          "#182a1e",
+          "#304938",
+          "#4c6a55",
+          "#6c8b75",
+          "#92ad99",
+          "#b9d0bf",
+          "#e3f3e7"
+        ]
+      },
+      "agave-wash": {
+        "role": "secondary",
+        "displayName": "Agave Wash",
+        "canonical": "#edf3ef",
+        "tonalRamp": [
+          "#080c0a",
+          "#222623",
+          "#3f4340",
+          "#5e635f",
+          "#7e8480",
+          "#a1a7a3",
+          "#c5cbc7",
+          "#eaf0ec"
+        ]
+      },
+      "agave-soft": {
+        "role": "secondary",
+        "displayName": "Sage Sheet",
+        "canonical": "#c7ebd0",
+        "tonalRamp": [
+          "#040e07",
+          "#182a1d",
+          "#314937",
+          "#4c6a54",
+          "#6c8b74",
+          "#92ad99",
+          "#b9d0bf",
+          "#e3f3e7"
+        ]
+      },
+      "crema": {
+        "role": "neutral",
+        "displayName": "Crema Plaster",
+        "canonical": "#fcf9f3",
+        "tonalRamp": [
+          "#0d0b07",
+          "#272520",
+          "#44423d",
+          "#63615c",
+          "#85827d",
+          "#a7a59f",
+          "#ccc9c3",
+          "#f1eee8"
+        ]
+      },
+      "crema-low": {
+        "role": "neutral",
+        "displayName": "Shaded Plaster",
+        "canonical": "#f6f3ed",
+        "tonalRamp": [
+          "#0d0b07",
+          "#272520",
+          "#44423d",
+          "#63615c",
+          "#85827d",
+          "#a7a59f",
+          "#ccc9c3",
+          "#f1eee8"
+        ]
+      },
+      "crema-mid": {
+        "role": "neutral",
+        "displayName": "Worn Plaster",
+        "canonical": "#f0eee8",
+        "tonalRamp": [
+          "#0c0b07",
+          "#262521",
+          "#43423d",
+          "#63615c",
+          "#84827d",
+          "#a7a59f",
+          "#cbc9c3",
+          "#f0eee8"
+        ]
+      },
+      "sand": {
+        "role": "neutral",
+        "displayName": "Sand",
+        "canonical": "#eae3d6",
+        "tonalRamp": [
+          "#0d0b07",
+          "#28251e",
+          "#464139",
+          "#666156",
+          "#888277",
+          "#aaa49b",
+          "#cdc9c0",
+          "#f1eee8"
+        ]
+      },
+      "sand-deep": {
+        "role": "neutral",
+        "displayName": "Deep Sand",
+        "canonical": "#dccfba",
+        "tonalRamp": [
+          "#0e0a05",
+          "#2a241a",
+          "#494133",
+          "#6a604e",
+          "#8c816f",
+          "#aea494",
+          "#d0c8bb",
+          "#f4eee4"
+        ]
+      },
+      "sheet-sand": {
+        "role": "neutral",
+        "displayName": "Warm Sand Sheet",
+        "canonical": "#f6e7d4",
+        "tonalRamp": [
+          "#0f0a05",
+          "#2b241b",
+          "#4a4034",
+          "#6b5f50",
+          "#8d8070",
+          "#aea395",
+          "#d1c8bc",
+          "#f4ede5"
+        ]
+      },
+      "card-white": {
+        "role": "neutral",
+        "displayName": "Card White",
+        "canonical": "#ffffff",
+        "tonalRamp": [
+          "#0b0b0b",
+          "#252525",
+          "#424242",
+          "#616161",
+          "#828282",
+          "#a5a5a5",
+          "#c9c9c9",
+          "#eeeeee"
+        ]
+      },
+      "espresso": {
+        "role": "neutral",
+        "displayName": "Espresso",
+        "canonical": "#2c221e",
+        "tonalRamp": [
+          "#0e0a09",
+          "#2a2321",
+          "#49403c",
+          "#6a5e5a",
+          "#8b7f7b",
+          "#ada29e",
+          "#d0c7c3",
+          "#f3edea"
+        ]
+      },
+      "pebble": {
+        "role": "neutral",
+        "displayName": "Pebble",
+        "canonical": "#685e57",
+        "tonalRamp": [
+          "#0e0a08",
+          "#292420",
+          "#48403b",
+          "#695f59",
+          "#8a8079",
+          "#aca39d",
+          "#cfc7c2",
+          "#f3ede9"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Session-done celebration headline only."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Active unit card title and unit page title (26–28px)."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "The one question or instruction on a lesson screen; feedback verdicts at 800."
+      },
+      "phrase": {
+        "displayName": "Phrase",
+        "purpose": "Spanish lines, examples, dialogue and choices (17–18px)."
+      },
+      "body-lg": {
+        "displayName": "Body Lg",
+        "purpose": "Reading passages, notes, goals, feedback body."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Can-do lines, balloon text, self-check items."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Meta lines, chips, counters, speaker names; sentence case, tabular digits."
+      },
+      "button": {
+        "displayName": "Button",
+        "purpose": "Pill button labels."
+      }
+    },
+    "shadows": [
+      {
+        "name": "rest",
+        "value": "0 4px 16px rgba(44, 34, 30, 0.06)",
+        "purpose": "Cards, unselected tiles, completed stones."
+      },
+      {
+        "name": "lift",
+        "value": "0 10px 28px rgba(44, 34, 30, 0.1)",
+        "purpose": "Mushroom's speech balloon; feedback sheet (inverted)."
+      },
+      {
+        "name": "press",
+        "value": "0 1px 4px rgba(44, 34, 30, 0.08)",
+        "purpose": "Selected tiles and segments."
+      },
+      {
+        "name": "clay-glow",
+        "value": "0 10px 24px rgba(200, 90, 50, 0.35)",
+        "purpose": "Current trail stone and big listen button only."
+      },
+      {
+        "name": "pill-baseline",
+        "value": "inset 0 -3px 0 #7a2a0c",
+        "purpose": "Pressed bottom edge of terracotta pills; removed on :active."
+      },
+      {
+        "name": "pill-baseline-agave",
+        "value": "inset 0 -3px 0 rgba(0, 0, 0, 0.22)",
+        "purpose": "Pressed bottom edge of agave pills."
+      },
+      {
+        "name": "mascot-drop",
+        "value": "drop-shadow(0 6px 10px rgba(44, 34, 30, 0.12))",
+        "purpose": "Mushroom cut-outs (filter, not box-shadow)."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-out-expo",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "All presses, sheet rise, progress bar."
+      },
+      {
+        "name": "press",
+        "value": "120ms",
+        "purpose": "Pill press-down and baseline removal."
+      },
+      {
+        "name": "sheet-rise",
+        "value": "420ms translateY(100%) to 0",
+        "purpose": "Feedback sheet entrance."
+      },
+      {
+        "name": "pop",
+        "value": "scale 0.92 → 1.04 → 1, 400–700ms",
+        "purpose": "Revealed model answer, session-done Mushroom, listen pulse."
+      },
+      {
+        "name": "shake",
+        "value": "±6px, 360ms",
+        "purpose": "Eliminated wrong choice, once."
+      },
+      {
+        "name": "progress",
+        "value": "width 700ms",
+        "purpose": "Lesson progress bar."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "1ms",
+        "purpose": "All animations and transitions collapse under prefers-reduced-motion."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "column",
+        "value": "480px",
+        "purpose": "Max width of the single centred column; no other breakpoints."
+      }
+    ],
+    "focusRing": "outline: 2.5px solid #c85a32; outline-offset: 3px",
+    "theme": "light only"
+  },
+  "components": [
+    {
+      "name": "Primary Pill",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The one pinned action on every lesson screen; fired terracotta with a kiln baseline that flattens on press.",
+      "html": "<button class=\"ds-pill-primary\">Continuar <svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M5 12h14\"/><path d=\"m12 5 7 7-7 7\"/></svg></button>",
+      "css": ".ds-pill-primary{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:52px;padding:0 24px;border:none;border-radius:9999px;font-family:Inter,ui-sans-serif,system-ui,sans-serif;font-weight:700;font-size:16px;letter-spacing:0.01em;transition:transform 120ms cubic-bezier(0.16,1,0.3,1),box-shadow 120ms cubic-bezier(0.16,1,0.3,1),background-color 200ms;cursor:pointer;background:#9f3c16;color:#fff;box-shadow:inset 0 -3px 0 #7a2a0c;min-width:280px} .ds-pill-primary:hover{background:#9f3c16} .ds-pill-primary:active{transform:translateY(2px);box-shadow:none} .ds-pill-primary:focus-visible{outline:2.5px solid #c85a32;outline-offset:3px;}"
+    },
+    {
+      "name": "Correct Pill",
+      "kind": "button",
+      "refersTo": "button-primary-correct",
+      "description": "Deep agave pill for 'Me salió' and continuing from a correct sheet.",
+      "html": "<button class=\"ds-pill-agave\">Me salió</button>",
+      "css": ".ds-pill-agave{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:52px;padding:0 24px;border:none;border-radius:9999px;font-family:Inter,ui-sans-serif,system-ui,sans-serif;font-weight:700;font-size:16px;letter-spacing:0.01em;transition:transform 120ms cubic-bezier(0.16,1,0.3,1),box-shadow 120ms cubic-bezier(0.16,1,0.3,1),background-color 200ms;cursor:pointer;background:#43634d;color:#fff;box-shadow:inset 0 -3px 0 rgba(0,0,0,0.22);min-width:200px} .ds-pill-agave:active{transform:translateY(2px);box-shadow:none} .ds-pill-agave:focus-visible{outline:2.5px solid #c85a32;outline-offset:3px;}"
+    },
+    {
+      "name": "Secondary Pill",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Outlined terracotta pill for 'Otra vez', always beside a primary.",
+      "html": "<button class=\"ds-pill-secondary\">Otra vez</button>",
+      "css": ".ds-pill-secondary{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:52px;padding:0 24px;border:none;border-radius:9999px;font-family:Inter,ui-sans-serif,system-ui,sans-serif;font-weight:700;font-size:16px;letter-spacing:0.01em;transition:transform 120ms cubic-bezier(0.16,1,0.3,1),box-shadow 120ms cubic-bezier(0.16,1,0.3,1),background-color 200ms;cursor:pointer;background:#fff;color:#9f3c16;border:1.5px solid #c85a32;min-width:160px} .ds-pill-secondary:active{transform:translateY(2px)} .ds-pill-secondary:focus-visible{outline:2.5px solid #c85a32;outline-offset:3px;}"
+    },
+    {
+      "name": "Listen Button",
+      "kind": "button",
+      "refersTo": "button-listen",
+      "description": "48px wash circle beside any Spanish line; plays it aloud.",
+      "html": "<button class=\"ds-listen\" aria-label=\"Escuchar\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.25\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M11 4.7a.7.7 0 0 0-1.2-.5L6.4 7.6A1.4 1.4 0 0 1 5.4 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.4a1.4 1.4 0 0 1 1 .4l3.4 3.4a.7.7 0 0 0 1.2-.5z\"/><path d=\"M16 9a5 5 0 0 1 0 6\"/><path d=\"M19.4 18.4a9 9 0 0 0 0-12.7\"/></svg></button>",
+      "css": ".ds-listen{display:grid;place-items:center;width:48px;height:48px;border:none;border-radius:9999px;background:#faeee9;color:#9f3c16;cursor:pointer;transition:transform 150ms} .ds-listen:active{transform:scale(0.95)} .ds-listen:focus-visible{outline:2.5px solid #c85a32;outline-offset:3px;}"
+    },
+    {
+      "name": "Choice Tile",
+      "kind": "custom",
+      "refersTo": "choice-tile",
+      "description": "Answer option with a letter badge; selected turns terracotta wash.",
+      "html": "<div class=\"ds-tiles\"><button class=\"ds-tile\"><span class=\"ds-tile-badge\">A</span>Tea and soup</button><button class=\"ds-tile ds-tile-on\"><span class=\"ds-tile-badge\">B</span>Coffee with milk</button></div>",
+      "css": ".ds-tiles{display:flex;flex-direction:column;gap:12px;width:320px} .ds-tile{display:flex;align-items:center;gap:16px;min-height:64px;padding:12px 16px;border-radius:20px;border:1.5px solid rgba(44,34,30,0.08);background:#fff;box-shadow:0 4px 16px rgba(44,34,30,0.06);font:400 17px/24px 'Plus Jakarta Sans',ui-sans-serif,sans-serif;color:#2c221e;text-align:left;cursor:pointer;transition:all 150ms} .ds-tile:active{transform:translateY(2px)} .ds-tile:focus-visible{outline:2.5px solid #c85a32;outline-offset:3px} .ds-tile-badge{display:grid;place-items:center;width:36px;height:36px;border-radius:9999px;background:#f0eee8;color:#685e57;font:700 14px Inter,sans-serif} .ds-tile-on{border-color:#c85a32;background:#faeee9;color:#9f3c16;font-weight:600;box-shadow:0 1px 4px rgba(44,34,30,0.08)} .ds-tile-on .ds-tile-badge{background:#9f3c16;color:#fff}"
+    },
+    {
+      "name": "Card",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "White card resting on plaster with a terracotta hairline and warm shadow.",
+      "html": "<div class=\"ds-card\"><h3>Read Spanish aloud</h3><p>I can read simple Spanish words aloud so a listener understands me.</p></div>",
+      "css": ".ds-card{width:320px;padding:20px;background:#fff;border-radius:24px;border:1px solid rgba(200,90,50,0.08);box-shadow:0 4px 16px rgba(44,34,30,0.06)} .ds-card h3{margin:0;font:800 26px/32px 'Plus Jakarta Sans',sans-serif;letter-spacing:-0.02em;color:#2c221e} .ds-card p{margin:8px 0 0;font:400 15px/22px 'Plus Jakarta Sans',sans-serif;color:#685e57}"
+    },
+    {
+      "name": "Answer Input",
+      "kind": "input",
+      "refersTo": "input-answer",
+      "description": "Card-styled 64px field for typed Spanish answers.",
+      "html": "<input class=\"ds-input\" placeholder=\"Escribe en español\" />",
+      "css": ".ds-input{width:320px;min-height:64px;padding:0 20px;background:#fff;border-radius:24px;border:1px solid rgba(200,90,50,0.08);box-shadow:0 4px 16px rgba(44,34,30,0.06);font:600 19px 'Plus Jakarta Sans',sans-serif;color:#2c221e;outline:none} .ds-input::placeholder{font-weight:400;color:#685e57} .ds-input:focus{border-color:#c85a32} .ds-input:focus-visible{outline:2.5px solid #c85a32;outline-offset:3px}"
+    },
+    {
+      "name": "Sessions Chip",
+      "kind": "chip",
+      "refersTo": "chip-sessions",
+      "description": "Canela count of sessions done; the only celebration counter.",
+      "html": "<span class=\"ds-chip\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#e5a93c\" stroke-width=\"2.5\" stroke-linecap=\"round\"><circle cx=\"12\" cy=\"12\" r=\"4\"/><path d=\"M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M6.3 17.7l-1.4 1.4M19.1 4.9l-1.4 1.4\"/></svg><b>3</b> sesiones</span>",
+      "css": ".ds-chip{display:inline-flex;align-items:center;gap:6px;min-height:36px;padding:0 12px;border-radius:9999px;background:#fff8ec;color:#7e5700;font:600 13px Inter,sans-serif;font-variant-numeric:tabular-nums} .ds-chip b{font-weight:600}"
+    },
+    {
+      "name": "Feedback Sheet",
+      "kind": "custom",
+      "refersTo": "feedback-sheet-retry",
+      "description": "The check moment: sage for right, warm sand for try again, rising from the bottom.",
+      "html": "<div class=\"ds-sheets\"><div class=\"ds-sheet ds-sheet-ok\"><p class=\"ds-sheet-t\">¡Muy bien!</p><button class=\"ds-sheet-b\">Continuar</button></div><div class=\"ds-sheet ds-sheet-retry\"><p class=\"ds-sheet-t\">Casi</p><p class=\"ds-sheet-p\">Listen for Valeria's order.</p><button class=\"ds-sheet-b\">Intentar otra vez</button></div></div>",
+      "css": ".ds-sheets{display:flex;gap:16px;flex-wrap:wrap} .ds-sheet{width:300px;padding:20px;border-radius:32px 32px 0 0;box-shadow:0 -10px 28px rgba(44,34,30,0.10);animation:ds-rise 420ms cubic-bezier(0.16,1,0.3,1)} .ds-sheet-ok{background:#c7ebd0} .ds-sheet-retry{background:#f6e7d4} .ds-sheet-t{margin:0;font:800 24px/32px 'Plus Jakarta Sans',sans-serif;letter-spacing:-0.02em} .ds-sheet-ok .ds-sheet-t{color:#43634d} .ds-sheet-retry .ds-sheet-t{color:#9f3c16} .ds-sheet-p{margin:4px 0 0;font:400 16px/24px 'Plus Jakarta Sans',sans-serif;color:#2c221e} .ds-sheet-b{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:52px;padding:0 24px;border:none;border-radius:9999px;font-family:Inter,ui-sans-serif,system-ui,sans-serif;font-weight:700;font-size:16px;letter-spacing:0.01em;transition:transform 120ms cubic-bezier(0.16,1,0.3,1),box-shadow 120ms cubic-bezier(0.16,1,0.3,1),background-color 200ms;cursor:pointer;width:100%;margin-top:16px;color:#fff} .ds-sheet-ok .ds-sheet-b{background:#43634d;box-shadow:inset 0 -3px 0 rgba(0,0,0,0.22)} .ds-sheet-retry .ds-sheet-b{background:#9f3c16;box-shadow:inset 0 -3px 0 #7a2a0c} .ds-sheet-b:active{transform:translateY(2px);box-shadow:none} .ds-sheet-b:focus-visible{outline:2.5px solid #c85a32;outline-offset:3px;} @keyframes ds-rise{from{transform:translateY(40px);opacity:0}to{transform:none;opacity:1}} @media (prefers-reduced-motion:reduce){.ds-sheet{animation:none}}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Courtyard Tutor",
+    "overview": "A sunlit plaster courtyard where a small dog teaches one person Spanish, one sentence at a time. The ground is warm crema plaster; everything she touches rests on it as soft white cards with a faint terracotta hairline and a warm, low shadow. Terracotta carries every decision, agave green confirms what is right or finished, and canela is kept for the quiet glow of sessions done. Mushroom, the dachshund cut-out, is always present as a tutor rather than a mascot decoration: he asks, listens, explains and reacts.\n\nThe system is calm and low-density: one task per screen, one primary action pinned at the bottom of a phone-width column, generous type, and tap targets of 48px or more. Feedback is kind by construction. A wrong answer raises a warm sand sheet that says \"Casi\" and offers another go; nothing flashes red and nothing is taken away. Progress is shown only where it means something: session dots, a thin terracotta progress bar, a winding trail of unit stones.\n\nThe build is light only. There is no dark theme, and none of the arcade apparatus of the category (hearts, lives, XP, leagues, streak counters, confetti) exists in the system.",
+    "keyCharacteristics": [
+      "Crema plaster ground, white cards, warm espresso-tinted shadows.",
+      "Terracotta for action, agave for correct and completed, canela for celebration.",
+      "Plus Jakarta Sans for voice, Inter for small labels and buttons.",
+      "Fully rounded pills with a pressed baseline edge; 24px card corners.",
+      "Mushroom cut-outs with a speech balloon in every lesson moment.",
+      "One task, one bottom pill, one feedback sheet."
+    ],
+    "rules": [
+      {
+        "name": "The Fired Clay Rule",
+        "body": "Words sit on terra-deep, never on terra. White text on the brighter terra fill is reserved for icons and shapes; any pill, badge or title with words uses terra-deep.",
+        "section": "colors"
+      },
+      {
+        "name": "The One Job Rule",
+        "body": "Agave means right or finished. Canela means sessions done. Neither is ever used as decoration or as a second action color.",
+        "section": "colors"
+      },
+      {
+        "name": "The No Red Rule",
+        "body": "A miss is shown in warm sand with a terracotta title, never in an alarm red. The eliminated choice greys back to worn plaster and shakes once.",
+        "section": "colors"
+      },
+      {
+        "name": "The Counted Digits Rule",
+        "body": "Every counter and fraction (sessions, 2/6, session numbers) uses tabular figures.",
+        "section": "typography"
+      },
+      {
+        "name": "The Sentence Case Rule",
+        "body": "No text in the system is set in tracked uppercase, and no label sits above a heading as a kicker.",
+        "section": "typography"
+      },
+      {
+        "name": "The Press Down Rule",
+        "body": "Things you tap move down 2px when pressed and lose their baseline or shadow; nothing grows or lifts on hover.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "**Do** put text-bearing terracotta on terra-deep and keep terra for wordless fills, per the Fired Clay Rule.",
+      "**Do** give every tappable thing at least 48px, and every primary pill 52px.",
+      "**Do** pin one primary pill to the bottom of lesson screens, over the crema fade.",
+      "**Do** show Mushroom with a fitting expression from the eight cut-outs on every lesson and summary screen.",
+      "**Do** answer a check with the feedback sheet: sage for right, warm sand for try again.",
+      "**Do** honour reduced motion; every animation and transition collapses to 1ms."
+    ],
+    "donts": [
+      "**Don't** add hearts, lives, XP, leagues, streak counters or confetti.",
+      "**Don't** put kicker or eyebrow labels above headings, or set any text in tracked uppercase.",
+      "**Don't** use an alarm red for misses or grey drop shadows; misses are warm sand, drop shadows are espresso-tinted.",
+      "**Don't** redraw Mushroom, crop him into circles or other masks, or put him in a frame.",
+      "**Don't** introduce new hex values in components; extend the palette in the theme first.",
+      "**Don't** add a dark theme without designing one; the system is light only."
+    ]
+  }
+}

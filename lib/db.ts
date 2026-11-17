@@ -86,6 +86,53 @@ export function getUnitItems(unitId: string) {
   ).all(unitId) as { id: string; kind: string; spanish: string; gloss: string; stage: string }[];
 }
 
+export type CheckItem = { id: string; skill: string; audio_ref: string | null; data: Record<string, unknown> };
+
+/** Everything the lesson player needs for one activity, and nothing more. */
+export function getLessonContext(activityId: string) {
+  const db = course();
+  const activity = getActivity(activityId);
+  if (!activity) return null;
+  const session = db.prepare(`SELECT id, unit_id, ord, title, objective, minutes FROM sessions WHERE id = ?`).get(activity.session_id) as SessionRow;
+  const unit = db.prepare(`SELECT id, ord, phase, title, goal, status, pilot FROM units WHERE id = ?`).get(session.unit_id) as UnitRow;
+  const siblings = db.prepare(`SELECT id FROM activities WHERE session_id = ? ORDER BY ord`).all(session.id) as { id: string }[];
+  const speakers: Record<string, string> = {};
+  for (const s of db.prepare(`SELECT id, name FROM speakers WHERE unit_id = ?`).all(unit.id) as { id: string; name: string }[])
+    speakers[s.id] = s.name;
+  // the words this activity practises, for self-rating and summaries
+  const refs = (activity.data.input_refs as string[] | undefined) ?? [];
+  const refItems = refs.length
+    ? (db.prepare(`SELECT id, spanish, gloss FROM items WHERE id IN (${refs.map(() => "?").join(",")})`).all(...refs) as
+        { id: string; spanish: string; gloss: string }[])
+    : [];
+  let checkItems: CheckItem[] = [];
+  const ref = activity.data.assessment_ref as string | undefined;
+  if (activity.type === "unit_check" && ref) {
+    checkItems = (db.prepare(`SELECT id, skill, audio_ref, data FROM check_items WHERE check_id = ? ORDER BY ord`).all(ref) as
+      (Omit<CheckItem, "data"> & { data: string })[]).map((r) => ({ ...r, data: parse<Record<string, unknown>>(r.data) ?? {} }));
+    for (const s of db.prepare(`SELECT id, name FROM speakers WHERE unit_id = ? AND scope = 'check'`).all(unit.id) as { id: string; name: string }[])
+      speakers[s.id] = s.name;
+  }
+  const index = siblings.findIndex((s) => s.id === activityId);
+  return { activity, session, unit, speakers, refItems, checkItems, index, total: siblings.length, nextId: siblings[index + 1]?.id ?? null };
+}
+
+/** The words a session practises (union of its activities' input_refs), in first-use order. */
+export function getSessionItems(sessionId: string) {
+  const db = course();
+  const ids: string[] = [];
+  for (const r of db.prepare(`SELECT data FROM activities WHERE session_id = ? ORDER BY ord`).all(sessionId) as { data: string }[])
+    for (const id of (JSON.parse(r.data).input_refs as string[] | undefined) ?? []) if (!ids.includes(id)) ids.push(id);
+  if (!ids.length) return [];
+  const rows = db.prepare(`SELECT id, spanish, gloss FROM items WHERE id IN (${ids.map(() => "?").join(",")})`).all(...ids) as
+    { id: string; spanish: string; gloss: string }[];
+  return ids.map((id) => rows.find((r) => r.id === id)).filter(Boolean) as typeof rows;
+}
+
+export function getSession(sessionId: string) {
+  return course().prepare(`SELECT id, unit_id, ord, title, objective, minutes FROM sessions WHERE id = ?`).get(sessionId) as SessionRow | undefined;
+}
+
 // ---------- progress ----------
 export function ensureLearner(id: string, name: string) {
   progress().prepare(`INSERT OR IGNORE INTO learners (id, name) VALUES (?, ?)`).run(id, name);
@@ -101,6 +148,14 @@ export function setProgress(learnerId: string, activityId: string, status: "star
     `INSERT INTO progress (learner_id, activity_id, status) VALUES (?, ?, ?)
      ON CONFLICT (learner_id, activity_id) DO UPDATE SET status = excluded.status, updated_at = datetime('now')`,
   ).run(learnerId, activityId, status);
+}
+
+/** Completed activity ids for a learner. */
+export function completedSet(learnerId: string) {
+  return new Set(
+    (progress().prepare(`SELECT activity_id FROM progress WHERE learner_id = ? AND status = 'completed'`).all(learnerId) as { activity_id: string }[])
+      .map((r) => r.activity_id),
+  );
 }
 
 export function getProgress(learnerId: string) {

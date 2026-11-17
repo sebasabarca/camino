@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+
+<html lang="es"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_stack" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&amp;family=Inter:wght@600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{width:100vw;margin:0;padding:0;}body{overscroll-behavior:none;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "surface-container-lowest": "#ffffff", "surface-tint": "#a23e18", "surface-bright": "#fcf9f3", "inverse-primary": "#ffb59c", "primary": "#9f3c16", "background": "#fcf9f3", "on-primary-container": "#fffbff", "inverse-on-surface": "#f3f0ea", "primary-container": "#bf542c", "on-secondary-fixed": "#281900", "surface-container-highest": "#e5e2dc", "primary-fixed": "#ffdbcf", "tertiary-container": "#5b7c65", "primary-fixed-dim": "#ffb59c", "on-secondary-fixed-variant": "#604100", "surface-container-low": "#f6f3ed", "surface": "#fcf9f3", "on-error": "#ffffff", "outline-variant": "#dec0b7", "on-tertiary": "#ffffff", "surface-container-high": "#ebe8e2", "error": "#ba1a1a", "on-error-container": "#93000a", "on-tertiary-container": "#f6fff5", "on-tertiary-fixed": "#012110", "secondary-fixed-dim": "#fabc4d", "surface-dim": "#dcdad4", "surface-variant": "#e5e2dc", "secondary-fixed": "#ffdead", "inverse-surface": "#31312d", "on-surface": "#1c1c18", "on-primary-fixed-variant": "#822801", "surface-container": "#f0eee8", "on-primary": "#ffffff", "on-background": "#1c1c18", "tertiary": "#43634d", "tertiary-fixed-dim": "#abcfb4", "secondary-container": "#fdbe50", "outline": "#8a726a", "error-container": "#ffdad6", "secondary": "#7e5700", "tertiary-fixed": "#c7ebd0", "on-surface-variant": "#57423b", "on-secondary": "#ffffff", "on-primary-fixed": "#390c00", "on-secondary-container": "#714d00", "on-tertiary-fixed-variant": "#2e4d39" }, "borderRadius": { "DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px" }, "spacing": { "space-lg": "1.5rem", "gutter-sm": "0.75rem", "margin-compact": "1rem", "space-xl": "2rem", "gutter": "1rem", "space-xs": "0.25rem", "space-md": "1rem", "space-sm": "0.5rem", "margin": "1.25rem" }, "fontFamily": { "headline-lg": ["Plus Jakarta Sans"], "headline-xl-mobile": ["Plus Jakarta Sans"], "label-lg": ["Inter"], "body-lg": ["Plus Jakarta Sans"], "headline-sm": ["Plus Jakarta Sans"], "label-sm": ["Inter"], "headline-md": ["Plus Jakarta Sans"], "body-md": ["Plus Jakarta Sans"], "label-md": ["Inter"], "headline-xl": ["Plus Jakarta Sans"], "body-sm": ["Plus Jakarta Sans"] }, "fontSize": { "headline-lg": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.015em", "fontWeight": "700" }], "headline-xl-mobile": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "800" }], "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }], "body-lg": ["17px", { "lineHeight": "26px", "fontWeight": "400" }], "headline-sm": ["18px", { "lineHeight": "24px", "fontWeight": "600" }], "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "700" }], "headline-md": ["20px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "700" }], "body-md": ["15px", { "lineHeight": "22px", "fontWeight": "400" }], "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600" }], "headline-xl": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "800" }], "body-sm": ["13px", { "lineHeight": "18px", "fontWeight": "400" }] } } } }</script><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface font-body-md text-on-surface flex flex-col min-h-screen"><header class="fixed top-0 w-full z-50 pt-safe bg-surface/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(44,34,30,0.04)]"><div class="h-16 px-margin flex items-center justify-between gap-gutter"><button aria-label="Salir de la lección" class="w-11 h-11 flex items-center justify-center rounded-full text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors" onclick="history.back()"><span class="material-symbols-outlined text-[24px]">close</span></button><div class="flex-1 flex flex-col justify-center px-1"><div class="w-full h-2.5 bg-surface-container-high rounded-full overflow-hidden"><div class="h-full bg-primary rounded-full transition-all duration-300" style="width: 60%;"></div></div></div><div class="flex items-center gap-1 bg-surface-container-low px-2.5 py-1 rounded-full"><span class="material-symbols-outlined text-error text-[18px]">favorite</span><span class="font-label-md text-label-md text-on-surface">4</span></div><img alt="Profile" class="w-8 h-8 rounded-full object-cover ml-1" src="https://lh3.googleusercontent.com/aida/ALJJyrDMD3SutDIacnBloy_b1ONZZNwO-fi-IGkecyD5vNCBKShrFNN9cDHUdQU9atePc2w0WsvCgG20AOVU7J2P5fmzojemmyoSKJvQyIMsyeJBjNEtfR_9buvQmLLP0A7YdpSSlkysMVuM_uL7VRbKbgqSTixKDHYMqywb6wzRH2j9wgmR2KaNKJ-syN75W-nzGVlZGRh0OcbNcQxE6Gwdya9NaB4ahmpAiezY5ifE86n4TdDmzEp3Trno0g"/></div></header><main class="flex flex-col relative w-full px-margin pt-16 pb-24 bg-surface flex-1"><div class="flex flex-col w-full pb-6">
+<!-- Mascot Guidance Bubble & Character Vignette -->
+<div class="flex items-end gap-space-sm mb-space-md pt-2">
+<div class="relative w-16 h-16 rounded-full bg-surface-container-low shadow-sm shrink-0 overflow-hidden flex items-center justify-center">
+<img class="w-full h-full object-cover" data-alt="Charming hand-crafted illustration of a dapple dachshund wearing an artisanal woven mini-sombrero, smiling warmly with expressive soulful eyes, warm terracotta and sage color scheme, warm sunny lighting, Latin American folk-modern craft style" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCrGC3kUWzv5n3mCpgd-2mIrllkm2epZfOie41rB9dljqLNFJCIQ8A5dXjZkNvBfA6u-JUSVNMlwwjdUXOjXX-SRm8tA_yUYvn2McTV4w_41tR2yyTq-RH25eix4Uc3DwGJYGnekJN6SAiILphP4g2GFpMxs-4Xw8nPnDyHv7EivPW7u4ydhfoK0fp2vfUMkQ_uAyU8vDYsp8YzeSbavNF4ZjRRDc9-DzoMGyAHZNw"/>
+<div class="absolute bottom-0 right-0 w-4 h-4 bg-tertiary-container rounded-full flex items-center justify-center text-on-tertiary shadow-sm">
+<span class="material-symbols-outlined text-[10px]">volume_up</span>
+</div>
+</div>
+<!-- Speech bubble with organic directional tail -->
+<div class="relative flex-1 bg-surface-container-lowest rounded-2xl rounded-bl-xs p-3 shadow-[0_4px_16px_rgba(44,34,30,0.06)]">
+<p class="font-label-sm text-label-sm text-primary uppercase tracking-wider mb-0.5">Lección práctica</p>
+<p class="font-body-md text-body-md text-on-surface font-semibold">Escucha y responde en voz alta</p>
+</div>
+</div>
+<!-- Central Acoustic Listening Deck -->
+<div class="bg-surface-container-lowest rounded-2xl p-space-md shadow-[0_4px_16px_rgba(44,34,30,0.06)] flex flex-col items-center mb-space-md relative overflow-hidden">
+<!-- Ambient decorative wave shimmer -->
+<div class="absolute -top-12 -right-12 w-32 h-32 bg-primary-fixed/30 rounded-full blur-2xl pointer-events-none"></div>
+<!-- Prominent Audio Button Container -->
+<div class="flex flex-col items-center my-2 w-full">
+<div class="relative flex items-center justify-center">
+<!-- Pulse Wave Layer -->
+<div class="absolute w-24 h-24 rounded-full bg-primary/10 transition-transform duration-700 ease-out scale-100" id="audio-pulse"></div>
+<button aria-label="Reproducir audio nativo" class="relative z-10 w-20 h-20 rounded-full bg-primary-container text-on-primary-container shadow-[0_4px_14px_rgba(159,60,22,0.35)] flex items-center justify-center active:scale-95 transition-transform cursor-pointer" id="play-audio-btn">
+<span class="material-symbols-outlined text-[36px]" id="play-icon" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</button>
+</div>
+<div class="mt-3 flex items-center gap-2">
+<span class="font-label-md text-label-md text-on-surface-variant font-medium">Escuchar audio (0:04)</span>
+</div>
+</div>
+<!-- Playback Velocity Toggle (1.0x / 0.8x Turtle) -->
+<div class="flex items-center gap-space-sm mt-3 bg-surface-container-low p-1 rounded-full shadow-inner">
+<button class="px-3 py-1.5 rounded-full bg-surface-container-lowest font-label-md text-label-md text-primary font-bold shadow-sm transition-all flex items-center gap-1 cursor-pointer" id="speed-normal">
+<span class="material-symbols-outlined text-[14px]">speed</span>
+<span>1.0x</span>
+</button>
+<button class="px-3 py-1.5 rounded-full font-label-md text-label-md text-on-surface-variant font-medium hover:text-on-surface transition-all flex items-center gap-1 cursor-pointer" id="speed-turtle">
+<span class="material-symbols-outlined text-[16px]">cruelty_free</span>
+<span>0.8x</span>
+</button>
+</div>
+<!-- Collapsible Transcript Pill Reveal -->
+<div class="w-full mt-4 pt-3 flex flex-col items-center">
+<button class="flex items-center gap-1 text-on-surface-variant hover:text-primary transition-colors cursor-pointer py-1 px-3 rounded-full hover:bg-surface-container-high/60" id="toggle-transcript">
+<span class="material-symbols-outlined text-[16px]">visibility</span>
+<span class="font-label-sm text-label-sm" id="transcript-toggle-text">Mostrar texto</span>
+</button>
+<div class="hidden w-full mt-2 p-3 bg-surface-container-low rounded-xl text-center" id="transcript-box">
+<p class="font-body-md text-body-md text-on-surface italic">"¡Hola! Nos vemos en el café a las cinco y media de la tarde."</p>
+</div>
+</div>
+</div>
+<!-- Challenge Inquiry Box -->
+<div class="px-1 mb-space-sm">
+<p class="font-label-sm text-label-sm text-on-surface-variant tracking-wider uppercase">Pregunta</p>
+<h2 class="font-headline-md text-headline-md text-on-surface mt-0.5">¿A qué hora te invitó Mateo?</h2>
+</div>
+<!-- Dual Tactile Answer Cards -->
+<div class="grid grid-cols-1 gap-space-sm mb-space-md">
+<!-- Option A -->
+<button class="choice-tile group w-full min-h-[58px] bg-surface-container-lowest hover:bg-surface-container-low active:translate-y-0.5 p-4 rounded-xl shadow-[0_3px_12px_rgba(44,34,30,0.05)] flex items-center justify-between text-left transition-all cursor-pointer" data-correct="true">
+<div class="flex items-center gap-3">
+<span class="tile-indicator w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center font-label-md text-label-md text-on-surface-variant group-hover:bg-primary-fixed group-hover:text-primary transition-colors">A</span>
+<span class="tile-text font-headline-sm text-headline-sm text-on-surface">A las 5:30 PM</span>
+</div>
+<div class="tile-check w-6 h-6 rounded-full bg-surface-container-low flex items-center justify-center opacity-0 transition-opacity">
+<span class="material-symbols-outlined text-[16px] text-tertiary" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+</button>
+<!-- Option B -->
+<button class="choice-tile group w-full min-h-[58px] bg-surface-container-lowest hover:bg-surface-container-low active:translate-y-0.5 p-4 rounded-xl shadow-[0_3px_12px_rgba(44,34,30,0.05)] flex items-center justify-between text-left transition-all cursor-pointer" data-correct="false">
+<div class="flex items-center gap-3">
+<span class="tile-indicator w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center font-label-md text-label-md text-on-surface-variant group-hover:bg-primary-fixed group-hover:text-primary transition-colors">B</span>
+<span class="tile-text font-headline-sm text-headline-sm text-on-surface">A las 8:00 AM</span>
+</div>
+<div class="tile-check w-6 h-6 rounded-full bg-surface-container-low flex items-center justify-center opacity-0 transition-opacity">
+<span class="material-symbols-outlined text-[16px] text-tertiary" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+</button>
+</div>
+<!-- Interactive Vocal Responder Deck -->
+<div class="bg-surface-container-low rounded-2xl p-space-md flex flex-col items-center shadow-sm">
+<div class="flex items-center justify-between w-full mb-3 px-1">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[18px] text-primary">record_voice_over</span>
+<span class="font-label-md text-label-md text-on-surface font-semibold">Respuesta por voz</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant" id="mic-status">Toca para hablar</span>
+</div>
+<!-- Microphone & Live Dynamic Soundwave Dock -->
+<div class="flex items-center gap-3 w-full bg-surface-container-lowest p-2 rounded-xl shadow-[0_2px_8px_rgba(44,34,30,0.04)]">
+<button aria-label="Grabar respuesta por voz" class="w-12 h-12 rounded-full bg-secondary-container text-on-secondary-container shadow-sm flex items-center justify-center active:scale-95 transition-transform shrink-0 cursor-pointer" id="mic-trigger">
+<span class="material-symbols-outlined text-[24px]" id="mic-icon">mic</span>
+</button>
+<!-- Waveform Simulation Canvas/Bars -->
+<div class="flex-1 flex items-center justify-center gap-1 h-8 px-2 overflow-hidden" id="waveform-container">
+<span class="waveform-bar w-1.5 bg-surface-container-highest rounded-full h-2 transition-all duration-150"></span>
+<span class="waveform-bar w-1.5 bg-surface-container-highest rounded-full h-3 transition-all duration-150"></span>
+<span class="waveform-bar w-1.5 bg-surface-container-highest rounded-full h-1.5 transition-all duration-150"></span>
+<span class="waveform-bar w-1.5 bg-surface-container-highest rounded-full h-4 transition-all duration-150"></span>
+<span class="waveform-bar w-1.5 bg-surface-container-highest rounded-full h-2.5 transition-all duration-150"></span>
+<span class="waveform-bar w-1.5 bg-surface-container-highest rounded-full h-5 transition-all duration-150"></span>
+<span class="waveform-bar w-1.5 bg-surface-container-highest rounded-full h-3 transition-all duration-150"></span>
+<span class="waveform-bar w-1.5 bg-surface-container-highest rounded-full h-1.5 transition-all duration-150"></span>
+<span class="waveform-bar w-1.5 bg-surface-container-highest rounded-full h-3.5 transition-all duration-150"></span>
+<span class="waveform-bar w-1.5 bg-surface-container-highest rounded-full h-2 transition-all duration-150"></span>
+</div>
+<div class="shrink-0 pr-1">
+<span class="text-tertiary font-label-sm text-label-sm font-semibold opacity-0 transition-opacity" id="mic-recognized">¡Excelente!</span>
+</div>
+</div>
+</div>
+</div>
+<script>
+  // Speed Toggle Interaction
+  const btnSpeedNormal = document.getElementById('speed-normal');
+  const btnSpeedTurtle = document.getElementById('speed-turtle');
+
+  btnSpeedNormal.addEventListener('click', () => {
+    btnSpeedNormal.className = "px-3 py-1.5 rounded-full bg-surface-container-lowest font-label-md text-label-md text-primary font-bold shadow-sm transition-all flex items-center gap-1 cursor-pointer";
+    btnSpeedTurtle.className = "px-3 py-1.5 rounded-full font-label-md text-label-md text-on-surface-variant font-medium hover:text-on-surface transition-all flex items-center gap-1 cursor-pointer";
+  });
+
+  btnSpeedTurtle.addEventListener('click', () => {
+    btnSpeedTurtle.className = "px-3 py-1.5 rounded-full bg-surface-container-lowest font-label-md text-label-md text-primary font-bold shadow-sm transition-all flex items-center gap-1 cursor-pointer";
+    btnSpeedNormal.className = "px-3 py-1.5 rounded-full font-label-md text-label-md text-on-surface-variant font-medium hover:text-on-surface transition-all flex items-center gap-1 cursor-pointer";
+  });
+
+  // Audio Playback Visualizer
+  const playBtn = document.getElementById('play-audio-btn');
+  const playIcon = document.getElementById('play-icon');
+  const pulseEl = document.getElementById('audio-pulse');
+  let isPlayingAudio = false;
+
+  playBtn.addEventListener('click', () => {
+    if (isPlayingAudio) return;
+    isPlayingAudio = true;
+    playIcon.textContent = 'pause';
+    pulseEl.classList.add('scale-125', 'bg-primary/20');
+    
+    setTimeout(() => {
+      isPlayingAudio = false;
+      playIcon.textContent = 'play_arrow';
+      pulseEl.classList.remove('scale-125', 'bg-primary/20');
+    }, 4000);
+  });
+
+  // Transcript Collapsible Reveal
+  const transcriptToggle = document.getElementById('toggle-transcript');
+  const transcriptBox = document.getElementById('transcript-box');
+  const transcriptToggleText = document.getElementById('transcript-toggle-text');
+
+  transcriptToggle.addEventListener('click', () => {
+    const isHidden = transcriptBox.classList.contains('hidden');
+    if (isHidden) {
+      transcriptBox.classList.remove('hidden');
+      transcriptToggleText.textContent = "Ocultar texto";
+    } else {
+      transcriptBox.classList.add('hidden');
+      transcriptToggleText.textContent = "Mostrar texto";
+    }
+  });
+
+  // Tile Selection Mechanics
+  const tiles = document.querySelectorAll('.choice-tile');
+  tiles.forEach(tile => {
+    tile.addEventListener('click', () => {
+      tiles.forEach(t => {
+        t.classList.remove('bg-primary-fixed/40', 'bg-tertiary-fixed/30');
+        t.querySelector('.tile-check').classList.add('opacity-0');
+        t.querySelector('.tile-indicator').className = 'tile-indicator w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center font-label-md text-label-md text-on-surface-variant transition-colors';
+      });
+
+      tile.classList.add('bg-primary-fixed/40');
+      const indicator = tile.querySelector('.tile-indicator');
+      indicator.className = 'tile-indicator w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center font-label-md text-label-md transition-colors';
+      tile.querySelector('.tile-check').classList.remove('opacity-0');
+    });
+  });
+
+  // Microphone Live Waveform Simulator
+  const micBtn = document.getElementById('mic-trigger');
+  const micIcon = document.getElementById('mic-icon');
+  const micStatus = document.getElementById('mic-status');
+  const recognizedLabel = document.getElementById('mic-recognized');
+  const waveBars = document.querySelectorAll('.waveform-bar');
+  let isRecording = false;
+  let waveInterval;
+
+  micBtn.addEventListener('click', () => {
+    isRecording = !isRecording;
+    if (isRecording) {
+      micBtn.classList.remove('bg-secondary-container', 'text-on-secondary-container');
+      micBtn.classList.add('bg-error', 'text-on-error');
+      micIcon.textContent = 'graphic_eq';
+      micStatus.textContent = 'Escuchando tu voz...';
+      micStatus.classList.add('text-primary', 'font-semibold');
+      recognizedLabel.classList.add('opacity-0');
+
+      waveBars.forEach(b => {
+        b.classList.remove('bg-surface-container-highest');
+        b.classList.add('bg-primary');
+      });
+
+      waveInterval = setInterval(() => {
+        waveBars.forEach(bar => {
+          const randHeight = Math.floor(Math.random() * 24) + 6;
+          bar.style.height = `${randHeight}px`;
+        });
+      }, 100);
+    } else {
+      clearInterval(waveInterval);
+      micBtn.classList.add('bg-secondary-container', 'text-on-secondary-container');
+      micBtn.classList.remove('bg-error', 'text-on-error');
+      micIcon.textContent = 'mic';
+      micStatus.textContent = 'Grabado con éxito';
+      micStatus.classList.remove('text-primary', 'font-semibold');
+      recognizedLabel.classList.remove('opacity-0');
+
+      waveBars.forEach(b => {
+        b.classList.add('bg-tertiary-container');
+        b.classList.remove('bg-primary');
+        b.style.height = '6px';
+      });
+
+      // Auto-highlight correct answer when speech succeeds
+      const correctTile = document.querySelector('[data-correct="true"]');
+      if (correctTile) correctTile.click();
+    }
+  });
+</script></main><footer class="fixed bottom-0 w-full z-50 pb-safe bg-surface/95 backdrop-blur-xl shadow-[0_-2px_14px_rgba(44,34,30,0.05)]"><div class="px-margin py-3 flex items-center"><button class="w-full h-13 min-h-[52px] rounded-full bg-primary text-on-primary font-label-lg text-label-lg shadow-[0_3px_0_#822801] active:translate-y-0.5 active:shadow-[0_1px_0_#822801] transition-transform flex items-center justify-center gap-space-sm" id="action-btn">Comprobar</button></div></footer></body></html>
