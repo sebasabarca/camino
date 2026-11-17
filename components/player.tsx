@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { Check, ChevronRight, Eye, Mic, RotateCcw, Snail, Volume2, X } from "lucide-react";
 import type { Line, Step } from "@/lib/steps";
 import { matches, normalize } from "@/lib/answer";
-import { speak, stopSpeaking } from "@/lib/speech";
+import { prefersSlow, speak, stopSpeaking } from "@/lib/speech";
 import { markActivity, saveAttempt } from "@/app/actions";
 import { Mushroom, MushroomSays, type Mood } from "./mushroom";
 
@@ -120,6 +120,7 @@ function Primary({ children, disabled, onClick, tone = "terra" }: { children: Re
 function SpeakButton({ lines, label = "Escuchar", big }: { lines: Line[]; label?: string; big?: boolean }) {
   const [slow, setSlow] = useState(false);
   const [playing, setPlaying] = useState(false);
+  useEffect(() => setSlow(prefersSlow()), []);
   const play = (s = slow) => {
     setPlaying(true);
     speak(lines.map((l) => ({ text: l.text, who: l.who })), { slow: s, onEnd: () => setPlaying(false) });

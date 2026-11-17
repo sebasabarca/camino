@@ -92,6 +92,24 @@
         ],
         "createdAt": "2026-11-17T22:19:35.832Z",
         "reason": "orchestrator: owner-supplied reference mock exported from Stitch, kept read-only for comparison, not shipped"
+      },
+      {
+        "rule": "design-system-font",
+        "value": "material symbols outlined",
+        "files": [
+          "design/reference/roadmap_ruta_de_aprendizaje/code.html"
+        ],
+        "createdAt": "2026-11-17T22:36:08.554Z",
+        "reason": "orchestrator: icon font inside owner-supplied Stitch reference mock, not shipped; the app uses lucide icons"
+      },
+      {
+        "rule": "design-system-font",
+        "value": "material symbols outlined",
+        "files": [
+          "design/reference/lecci_n_emparejar_pares/code.html"
+        ],
+        "createdAt": "2026-11-17T22:36:08.575Z",
+        "reason": "orchestrator: icon font inside owner-supplied Stitch reference mock, not shipped; the app uses lucide icons"
       }
     ]
   }

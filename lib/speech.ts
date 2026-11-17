@@ -29,6 +29,14 @@ function voiceFor(who: string) {
 
 export const canSpeak = () => typeof window !== "undefined" && "speechSynthesis" in window;
 
+// Her default speed (set on the Yo tab). Per-device convenience only, so localStorage is enough.
+export function prefersSlow() {
+  try { return localStorage.getItem("voice-speed") === "slow"; } catch { return false; }
+}
+export function setPrefersSlow(slow: boolean) {
+  try { localStorage.setItem("voice-speed", slow ? "slow" : "normal"); } catch { /* private mode: keep default */ }
+}
+
 export function speak(lines: { text: string; who?: string }[], opts: { slow?: boolean; onEnd?: () => void } = {}) {
   if (!canSpeak()) return opts.onEnd?.();
   speechSynthesis.cancel();
@@ -37,7 +45,7 @@ export function speak(lines: { text: string; who?: string }[], opts: { slow?: bo
     const v = voiceFor(l.who ?? "mushroom");
     u.lang = v?.lang ?? "es-MX";
     if (v) u.voice = v;
-    u.rate = opts.slow ? 0.72 : 0.95;
+    u.rate = (opts.slow ?? prefersSlow()) ? 0.72 : 0.95;
     if (i === lines.length - 1 && opts.onEnd) u.onend = opts.onEnd;
     speechSynthesis.speak(u);
   });

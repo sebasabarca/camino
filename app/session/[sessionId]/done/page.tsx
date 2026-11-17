@@ -33,7 +33,7 @@ export default async function SessionDone({ params }: { params: Promise<{ sessio
               <li key={i.id} className="flex items-center gap-3 py-3.5">
                 <div className="min-w-0 flex-1">
                   <p className="text-[17px] font-semibold leading-6 text-espresso">{i.spanish}</p>
-                  {i.gloss && <p className="text-[14px] italic leading-5 text-pebble">{i.gloss}</p>}
+                  {i.gloss && <p className="text-[14px] leading-5 text-pebble">{i.gloss}</p>}
                 </div>
                 <SayIt text={i.spanish} />
               </li>

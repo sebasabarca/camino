@@ -14,7 +14,7 @@ export default async function UnitPage({ params }: { params: Promise<{ unitId: s
   const nowId = unit.sessions.find((s) => !s.complete)?.id;
 
   return (
-    <div className="pb-16">
+    <div className="pb-28">
       <header className="flex items-center gap-2 px-3 pt-[max(env(safe-area-inset-top),0.75rem)]">
         <Link href="/" aria-label="Volver al camino" className="grid size-12 place-items-center rounded-full text-pebble hover:bg-crema-mid">
           <ArrowLeft className="size-6" strokeWidth={2.25} />

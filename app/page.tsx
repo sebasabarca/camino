@@ -1,135 +1,112 @@
 import Link from "next/link";
-import { ArrowRight, AudioLines, CalendarHeart, Check, Coffee, Hand, Sun, Users, type LucideIcon } from "lucide-react";
+import { ArrowRight, Check, Sun } from "lucide-react";
 import { courseState } from "@/lib/course";
 import { Mushroom } from "@/components/mushroom";
 
 export const dynamic = "force-dynamic";
 
-const ICON: Record<string, LucideIcon> = { "p0-sounds-01": AudioLines, "p0-u01": Hand, "a1-u01": Users, "a1-u02": Sun, "a1-u03": Coffee, "a1-u04": CalendarHeart };
-// stones wander left and right along the trail (x in % of the column)
-const X = [50, 74, 50, 26, 50, 74, 50, 26];
-const ROW = 176;
-
-export default function Camino() {
+// Home: the can-do ladder. Each unit is one real-life "I can…" she climbs; the current rung is open.
+export default function Home() {
   const { units, current, sessionsDone } = courseState();
-  const session = current.sessions.find((s) => !s.complete) ?? current.sessions[0];
   const ci = units.findIndex((u) => u.id === current.id);
-  const pts = units.map((_, i) => ({ x: X[i % X.length], y: i * ROW + 48 }));
-  // Trail dots: sample each curve from below one stone's label to above the next stone, evenly by arc length
-  // in a nominal 350px-wide column, then place them in % horizontally so they stay round at any width.
-  const dots = pts.slice(1).flatMap((p, i) => {
-    // centre to centre; stones and the labels' crema backing sit on top and hide the dots beneath them
-    const a = { x: pts[i].x * 3.5, y: pts[i].y }, b = { x: p.x * 3.5, y: p.y };
-    const at = (t: number) => {
-      const u = 1 - t, c1 = { x: a.x, y: a.y + ROW * 0.55 }, c2 = { x: b.x, y: b.y - ROW * 0.55 };
-      return { x: u * u * u * a.x + 3 * u * u * t * c1.x + 3 * u * t * t * c2.x + t * t * t * b.x, y: u * u * u * a.y + 3 * u * u * t * c1.y + 3 * u * t * t * c2.y + t * t * t * b.y };
-    };
-    const samples = Array.from({ length: 41 }, (_, k) => at(k / 40));
-    const lens = samples.map((q, k) => (k ? Math.hypot(q.x - samples[k - 1].x, q.y - samples[k - 1].y) : 0)).map((_, k, arr) => arr.slice(0, k + 1).reduce((x, y) => x + y, 0));
-    const n = Math.max(2, Math.round(lens[40] / 16));
-    return Array.from({ length: n + 1 }, (_, k) => {
-      const target = (k / n) * lens[40];
-      const j = lens.findIndex((l) => l >= target);
-      return { x: samples[j].x / 3.5, y: samples[j].y, walked: i < ci };
-    });
-  }).filter((d) =>
-    // keep the trail clear of every stone (radius + halo) and the label under it, in the nominal 350px space
-    pts.every((p, k) => {
-      const r = k === ci ? 54 : 40;
-      const dx = (d.x - p.x) * 3.5, dy = d.y - p.y;
-      const inStone = Math.hypot(dx, dy) < r;
-      const inLabel = Math.abs(dx) < 58 && dy > 0 && dy < r + 50;
-      return !inStone && !inLabel;
-    }),
-  );
-  const height = (units.length - 1) * ROW + 120;
+  const session = current.sessions.find((s) => !s.complete) ?? current.sessions[0];
+  const reached = units.filter((u) => u.complete).length;
 
   return (
-    <div className="pb-16">
-      <header className="flex items-center gap-3 px-5 pb-2 pt-[max(env(safe-area-inset-top),1rem)]">
+    <div className="pb-28">
+      <header className="flex items-center gap-3 px-5 pb-1 pt-[max(env(safe-area-inset-top),1rem)]">
         <Mushroom mood="friendly" size={52} priority />
         <div className="min-w-0 flex-1">
-          <p className="text-[18px] font-bold leading-6 tracking-[-0.01em] text-espresso">Camino con Mushroom</p>
+          <p className="whitespace-nowrap text-[18px] font-bold leading-6 tracking-[-0.01em] text-espresso">Camino con Mushroom</p>
           <p className="font-label text-[12px] font-semibold text-pebble">Hola, Serena</p>
         </div>
         <span className="flex min-h-9 items-center gap-1.5 rounded-full bg-canela-wash px-3 font-label text-[13px] font-semibold text-canela-deep">
-          <Sun className="size-4 text-canela" strokeWidth={2.5} />
-          <span className="tabular">{sessionsDone}</span> {sessionsDone === 1 ? "sesión" : "sesiones"}
+          <Sun className="size-4 text-canela" strokeWidth={2.5} aria-hidden />
+          <span className="tabular">{sessionsDone}</span>
+          <span className="sr-only">{sessionsDone === 1 ? "sesión terminada" : "sesiones terminadas"}</span>
         </span>
       </header>
 
-      <section aria-labelledby="now" className="card mx-5 mt-4 p-5">
-        <div className="flex items-start justify-between gap-3">
-          <h1 id="now" className="text-balance text-[26px] font-extrabold leading-8 tracking-[-0.02em] text-espresso">{current.title}</h1>
-          {(() => { const I = ICON[current.id] ?? Sun; return <I className="mt-1 size-7 shrink-0 text-terra" strokeWidth={2} aria-hidden />; })()}
-        </div>
-        <p className="mt-2 text-[15px] leading-[22px] text-pebble">{current.goal}</p>
-        <ol className="mt-5 flex gap-1.5" aria-label="Sesiones de esta unidad">
-          {current.sessions.map((s, i) => (
-            <li key={s.id} className="flex-1">
-              <span className="sr-only">Sesión {i + 1}: {s.complete ? "terminada" : s.id === session.id ? "ahora" : "pendiente"}</span>
-              <span aria-hidden className={`block h-2.5 rounded-full ${s.complete ? "bg-agave" : s.id === session.id ? "bg-terra" : "bg-sand"}`} />
-            </li>
-          ))}
-        </ol>
-        <p className="mt-2 font-label text-[12px] font-semibold text-pebble">
-          Sesión {session.ord + 1} de {current.sessions.length} · {session.title}
+      <div className="px-5 pt-4">
+        <h1 className="text-[28px] font-extrabold leading-9 tracking-[-0.02em] text-espresso">{reached === 0 ? "Lo que vas a poder hacer" : "Lo que ya puedes hacer"}</h1>
+        <p className="mt-1 text-[15px] leading-[22px] text-pebble">
+          {reached === 0
+            ? "Seis metas reales. Una sesión a la vez."
+            : `${reached} de ${units.length} metas alcanzadas. Una sesión a la vez.`}
         </p>
-        <Link
-          href={`/learn/${session.nextId}`}
-          className="pill mt-5 w-full bg-terra-deep text-white shadow-[inset_0_-3px_0_#7a2a0c] active:translate-y-0.5 active:shadow-none"
-        >
-          {session.finished > 0 ? "Continuar" : "Empezar"} <ArrowRight className="size-5" />
-        </Link>
-      </section>
+      </div>
 
-      <nav aria-label="El camino" className="relative mx-5 mt-8" style={{ height }}>
-        {dots.map((d, k) => (
-          <span
-            key={k}
-            aria-hidden
-            className={`absolute -translate-x-1/2 -translate-y-1/2 rounded-full bg-agave ${d.walked ? "size-2.5" : "size-2 opacity-35"}`}
-            style={{ left: `${d.x}%`, top: d.y }}
-          />
-        ))}
+      <ol className="mt-5 px-5" aria-label="Metas del curso">
         {units.map((u, i) => {
-          const I = ICON[u.id] ?? Sun;
-          const state = u.complete ? "done" : i === ci ? "now" : i < ci ? "open" : "later";
+          const state = u.complete ? "done" : i === ci ? "now" : "later";
+          const last = i === units.length - 1;
+          // the rail segment below this rung: agave where she has already walked
+          const rail = last ? null : (
+            <span aria-hidden className={`absolute left-[21px] ${u.complete ? "top-9 bg-agave" : "top-11 bg-sand-deep/70"} -bottom-1 w-[3px] rounded-full`} />
+          );
+
+          if (state === "now")
+            return (
+              <li key={u.id} className="relative pb-4">
+                {rail}
+                <section aria-labelledby={`goal-${u.id}`} className="card relative -ml-1 border-terra/35 p-4 shadow-[var(--shadow-lift)]">
+                  <div className="flex items-start gap-3">
+                    <span className="grid size-11 shrink-0 place-items-center rounded-full bg-terra font-label tabular text-[16px] font-bold text-white ring-8 ring-terra-wash">
+                      {i + 1}
+                    </span>
+                    <div className="min-w-0 flex-1">
+                      <h2 id={`goal-${u.id}`} className="text-balance text-[18px] font-extrabold leading-6 tracking-[-0.01em] text-espresso [font-feature-settings:normal]">
+                        {u.goal}
+                      </h2>
+                      <p className="mt-1 font-label text-[12px] font-semibold text-pebble">{u.title}</p>
+                    </div>
+                  </div>
+                  <ol className="mt-4 flex gap-1.5" aria-label="Sesiones de esta meta">
+                    {u.sessions.map((s, k) => (
+                      <li key={s.id} className="flex-1">
+                        <span className="sr-only">Sesión {k + 1}: {s.complete ? "terminada" : s.id === session.id ? "ahora" : "pendiente"}</span>
+                        <span aria-hidden className={`block h-2.5 rounded-full ${s.complete ? "bg-agave" : s.id === session.id ? "bg-terra" : "bg-sand"}`} />
+                      </li>
+                    ))}
+                  </ol>
+                  <p className="mt-2 font-label text-[12px] font-semibold text-pebble">
+                    Sesión {session.ord + 1} de {u.sessions.length} · {session.title} · {session.minutes} min
+                  </p>
+                  <Link
+                    href={`/learn/${session.nextId}`}
+                    className="pill mt-4 w-full bg-terra-deep text-white shadow-[inset_0_-3px_0_#7a2a0c] active:translate-y-0.5 active:shadow-none"
+                  >
+                    {u.finished > 0 ? "Continuar" : "Empezar"} <ArrowRight className="size-5" />
+                  </Link>
+                  <Link href={`/unit/${u.id}`} className="mt-1 flex min-h-11 items-center justify-center font-label text-[14px] font-semibold text-terra-deep">
+                    Ver las {u.sessions.length} sesiones
+                  </Link>
+                </section>
+              </li>
+            );
+
           return (
-            <Link
-              key={u.id}
-              href={`/unit/${u.id}`}
-              className="group absolute flex w-32 -translate-x-1/2 flex-col items-center gap-2 text-center"
-              style={{ left: `${pts[i].x}%`, top: pts[i].y - (state === "now" ? 40 : 32) }}
-            >
-              <span
-                className={`relative grid place-items-center rounded-full transition group-active:translate-y-0.5 ${
-                  state === "now"
-                    ? "size-20 bg-terra text-white shadow-[0_10px_24px_rgba(200,90,50,0.35)] ring-[10px] ring-terra-wash"
-                    : state === "done"
-                      ? "size-16 bg-agave text-white shadow-[var(--shadow-card)]"
-                      : "size-16 border-[1.5px] border-sand-deep bg-crema-low text-pebble"
-                }`}
-              >
-                <I className={state === "now" ? "size-9" : "size-7"} strokeWidth={2} aria-hidden />
-                {state === "done" && (
-                  <span className="absolute -right-1 -top-1 grid size-6 place-items-center rounded-full bg-canela text-white ring-2 ring-crema">
-                    <Check className="size-3.5" strokeWidth={3.5} />
+            <li key={u.id} className={`relative ${state === "done" ? "pb-3" : "pb-4"}`}>
+              {rail}
+              <Link href={`/unit/${u.id}`} className="group flex items-start gap-3.5 rounded-[1.25rem] py-0.5">
+                <span
+                  className={`relative grid shrink-0 place-items-center rounded-full font-label tabular text-[15px] font-bold transition group-active:translate-y-0.5 ${
+                    state === "done" ? "mx-1 size-9 bg-agave text-white shadow-[var(--shadow-card)]" : "size-11 border-[1.5px] border-sand-deep bg-crema-low text-pebble"
+                  }`}
+                >
+                  {state === "done" ? <Check className="size-5" strokeWidth={3} aria-hidden /> : i + 1}
+                </span>
+                <span className="min-w-0 flex-1 pt-0.5">
+                  <span className={`block truncate text-[16px] leading-6 ${state === "done" ? "font-semibold text-agave-deep" : "font-medium text-pebble"}`}>{u.title}</span>
+                  <span className="block font-label text-[12px] font-semibold text-pebble">
+                    {state === "done" ? "Meta alcanzada" : u.finished > 0 ? `${u.finished} de ${u.count} actividades` : "Después"}
                   </span>
-                )}
-              </span>
-              <span className={`rounded-full bg-crema px-2.5 py-0.5 text-[14px] leading-[18px] ${state === "now" ? "font-bold text-terra-deep" : "font-semibold text-espresso"}`}>{u.title}</span>
-              {state === "now" && <span className="sr-only">(ahora)</span>}
-            </Link>
+                </span>
+              </Link>
+            </li>
           );
         })}
-        <Mushroom
-          mood="listening"
-          size={72}
-          className="pointer-events-none absolute -translate-x-1/2"
-          style={{ left: `${pts[ci].x > 50 ? pts[ci].x - 36 : pts[ci].x + 36}%`, top: pts[ci].y - 56 }}
-        />
-      </nav>
+      </ol>
     </div>
   );
 }
