@@ -1,8 +1,8 @@
 "use client";
-import { createContext, useContext, useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Check, ChevronRight, Eye, Mic, RotateCcw, Snail, Volume2, X } from "lucide-react";
+import { Check, ChevronRight, Eye, MessageCircle, RotateCcw, Snail, Volume2, X } from "lucide-react";
 import type { Line, Step } from "@/lib/steps";
 import { matches, normalize } from "@/lib/answer";
 import { prefersSlow, speak, stopSpeaking } from "@/lib/speech";
@@ -72,11 +72,19 @@ export function Player(props: {
         <div className="h-2.5 flex-1 overflow-hidden rounded-full bg-sand" role="progressbar" aria-valuemin={0} aria-valuemax={100} aria-valuenow={Math.round(progress * 100)} aria-label="Progreso de la sesión">
           <div className="h-full rounded-full bg-terra transition-[width] duration-700 ease-[var(--ease-out-expo)]" style={{ width: `${Math.max(progress * 100, 3)}%` }} />
         </div>
-        <span className="font-label tabular w-12 text-right text-[13px] font-semibold text-pebble">{index + 1}/{total}</span>
       </header>
 
       <main className="flex flex-1 flex-col px-5 pb-40 pt-2" key={step.id}>
-        <StepView step={step} intro={at === 0 ? doable(props.intro, step) : undefined} onJudge={judge} onNext={advance} locked={!!verdict} />
+        <StepView
+          step={step}
+          intro={at === 0 ? doable(props.intro, step) : undefined}
+          pos={steps.filter((s) => s.kind === step.kind).indexOf(step) + 1}
+          count={steps.filter((s) => s.kind === step.kind).length}
+          next={steps[at + 1]?.kind}
+          onJudge={judge}
+          onNext={advance}
+          locked={!!verdict}
+        />
       </main>
 
       {verdict && <FeedbackSheet v={verdict} onContinue={verdict.final ? advance : () => setVerdict(null)} />}
@@ -159,38 +167,70 @@ function SpeakButton({ lines, label = "Escuchar", big }: { lines: Line[]; label?
   );
 }
 
-const Buddy = createContext<Mood | null>(null);
-
-function Heading({ children, extra }: { children: React.ReactNode; extra?: React.ReactNode }) {
-  const mood = useContext(Buddy);
+/** Every exercise opens the same way: what to do (the heading), then where she is and how to answer. */
+function TaskHead({ title, sub, extra }: { title: string; sub?: string; extra?: React.ReactNode }) {
   return (
-    <div className="flex items-center gap-3">
-      {mood && <Mushroom mood={mood} size={60} />}
-      <h1 className="min-w-0 flex-1 text-balance text-[24px] font-bold leading-8 tracking-[-0.015em] text-espresso">{children}</h1>
+    <div className="flex items-start gap-3">
+      <div className="min-w-0 flex-1">
+        <h1 className="text-balance text-[24px] font-bold leading-8 tracking-[-0.015em] text-espresso">{title}</h1>
+        {sub && <p className="mt-1 font-label text-[14px] font-semibold leading-5 text-pebble">{sub}</p>}
+      </div>
       {extra}
     </div>
   );
+}
+
+const of = (pos: number, count: number) => (count > 1 ? `${pos} of ${count} · ` : "");
+
+/** The plain-English instruction for each kind of screen. Content stays in the body; this says what to do with it. */
+function task(step: Step, pos: number, count: number, next?: Step["kind"]): { title: string; sub?: string } {
+  const after = next === "choice" ? " Questions come next." : "";
+  switch (step.kind) {
+    case "listen":
+      return step.lines
+        ? { title: "Listen to the conversation", sub: (step.reveal === "after" ? "Play it first, then show the words." : "Tap play. Tap any line to hear it again.") + after }
+        : { title: "Read this", sub: ("Take your time." + after).trim() };
+    case "learn":
+      return { title: "How it works", sub: "Read it, play the examples, then tap Entendido." };
+    case "choice":
+      return { title: step.q, sub: `${of(pos, count)}Choose one answer.` };
+    case "type":
+      if (step.question) return { title: step.cue, sub: `${of(pos, count)}Type a short answer. Accents are optional.` };
+      return { title: /_{2,}/.test(step.cue) ? "Fill in the gap in Spanish" : "How do you say this in Spanish?", sub: `${of(pos, count)}Type your answer. Accents are optional.` };
+    case "say":
+      return { title: "Answer out loud in Spanish", sub: `${of(pos, count)}Say it, then tap Ya lo dije to compare.` };
+    case "write":
+      return { title: "Write a message in Spanish", sub: "Write your draft, then compare it with a model." };
+    case "rate":
+      return { title: step.prompt, sub: "Pick one. There is no wrong answer." };
+  }
 }
 
 /* ---------------- step views ---------------- */
 
 type Judge = (ok: boolean, answer: string, hint?: string, solution?: string, praise?: string, spanish?: boolean) => void;
 
-function StepView({ step, intro, onJudge, onNext, locked }: { step: Step; intro?: string; onJudge: Judge; onNext: () => void; locked: boolean }) {
+function StepView({ step, intro, pos, count, next, onJudge, onNext, locked }: {
+  step: Step; intro?: string; pos: number; count: number; next?: Step["kind"]; onJudge: Judge; onNext: () => void; locked: boolean;
+}) {
   const mood: Mood = step.kind === "listen" ? "listening" : step.kind === "learn" ? "teaching" : step.kind === "say" ? "curious" : "thinking";
+  const t = task(step, pos, count, next);
+  const replay = step.kind === "choice" && step.hear ? <SpeakButton lines={step.hear} label="Escuchar otra vez" /> : undefined;
   return (
-    <Buddy.Provider value={intro ? null : mood}>
     <div className="flex flex-col gap-6">
-      {intro && <MushroomSays mood={mood}>{intro}</MushroomSays>}
+      {/* the instruction leads; Mushroom's line (first screen of an activity) follows as colour, not as the task */}
+      <TaskHead title={t.title} sub={t.sub} extra={replay} />
+      {intro && step.kind === "learn" && <MushroomSays mood={mood}>{intro}</MushroomSays>}
       {step.kind === "listen" && <ListenStep step={step} onNext={onNext} />}
-      {step.kind === "learn" && <LearnStep step={step} onNext={onNext} />}
+      {step.kind === "learn" && <LearnStep step={step} onNext={onNext} tutor={!intro} />}
       {step.kind === "choice" && <ChoiceStep step={step} onJudge={onJudge} locked={locked} />}
       {step.kind === "type" && <TypeStep step={step} onJudge={onJudge} locked={locked} />}
       {step.kind === "say" && <SayStep step={step} onNext={onNext} />}
       {step.kind === "write" && <WriteStep step={step} onNext={onNext} />}
       {step.kind === "rate" && <RateStep step={step} onNext={onNext} />}
+      {/* Mushroom's line comes after the task, as colour; a speaking prompt already shows him asking */}
+      {intro && step.kind !== "learn" && !(step.kind === "say" && step.hear) && <MushroomSays mood={mood} size={64}>{intro}</MushroomSays>}
     </div>
-    </Buddy.Provider>
   );
 }
 
@@ -199,7 +239,6 @@ function ListenStep({ step, onNext }: { step: Extract<Step, { kind: "listen" }>;
   if (step.text && !step.lines)
     return (
       <>
-        <Heading>Lee con calma</Heading>
         <article className="card whitespace-pre-line p-6 text-[17px] leading-[28px] text-espresso">{step.text}</article>
         <BottomBar><Primary onClick={onNext}>Continuar <ChevronRight className="size-5" /></Primary></BottomBar>
       </>
@@ -219,7 +258,7 @@ function ListenStep({ step, onNext }: { step: Extract<Step, { kind: "listen" }>;
                 <button type="button" onClick={() => speak([{ text: l.text, who: l.who }])} className="flex w-full flex-col items-start gap-0.5 py-3 text-left">
                   {l.name && <span className="font-label text-[12px] font-semibold text-terra-deep">{l.name}</span>}
                   <span className="text-[17px] font-semibold leading-[26px] text-espresso">{l.text}</span>
-                  {l.en && <span className="text-[15px] italic leading-[22px] text-pebble">{l.en}</span>}
+                  {l.en && <span className="text-[15px] leading-[22px] text-pebble">{l.en}</span>}
                 </button>
               </li>
             ))}
@@ -231,8 +270,8 @@ function ListenStep({ step, onNext }: { step: Extract<Step, { kind: "listen" }>;
   );
 }
 
-function LearnStep({ step, onNext }: { step: Extract<Step, { kind: "learn" }>; onNext: () => void }) {
-  const tutor = useContext(Buddy); // no intro balloon on this screen → Mushroom delivers the note himself
+function LearnStep({ step, onNext, tutor }: { step: Extract<Step, { kind: "learn" }>; onNext: () => void; tutor: boolean }) {
+  // no intro balloon on this screen → Mushroom delivers the note himself
   return (
     <>
       {step.note && (tutor
@@ -244,7 +283,7 @@ function LearnStep({ step, onNext }: { step: Extract<Step, { kind: "learn" }>; o
             <li key={i} className="flex items-center gap-3 py-4">
               <div className="min-w-0 flex-1">
                 <p className="text-[18px] font-semibold leading-6 text-espresso">{e.es}</p>
-                {e.en && <p className="mt-0.5 text-[15px] italic leading-[22px] text-pebble">{e.en}</p>}
+                {e.en && <p className="mt-0.5 text-[15px] leading-[22px] text-pebble">{e.en}</p>}
               </div>
               <SpeakButton lines={[{ text: e.es, who: "mushroom" }]} label={`Escuchar: ${e.es}`} />
             </li>
@@ -268,7 +307,6 @@ function ChoiceStep({ step, onJudge, locked }: { step: Extract<Step, { kind: "ch
   };
   return (
     <>
-      <Heading extra={step.hear && <SpeakButton lines={step.hear} label="Escuchar otra vez" />}>{step.q}</Heading>
       <div className="flex flex-col gap-3" role="radiogroup" aria-label={step.q}>
         {step.choices.map((c, i) => {
           const isSel = sel === c;
@@ -306,10 +344,10 @@ function TypeStep({ step, onJudge, locked }: { step: Extract<Step, { kind: "type
   const [v, setV] = useState("");
   const ref = useRef<HTMLInputElement>(null);
   useEffect(() => ref.current?.focus({ preventScroll: true }), []);
-  const check = () => v.trim() && onJudge(matches(v, step.keys), v, step.feedback.incorrect, step.answer, step.feedback.correct, true);
+  const check = () => v.trim() && onJudge(matches(v, step.keys), v, step.feedback.incorrect, step.answer, step.feedback.correct, !step.question);
   return (
     <>
-      <Heading>{step.cue}</Heading>
+      {!step.question && <p className="rounded-[1.25rem] bg-crema-mid px-5 py-4 text-[26px] font-bold leading-8 tracking-[-0.015em] text-espresso">{step.cue}</p>}
       <form onSubmit={(e) => { e.preventDefault(); if (!locked) check(); }}>
         <label htmlFor="answer" className="sr-only">Tu respuesta en español</label>
         <input
@@ -324,10 +362,9 @@ function TypeStep({ step, onJudge, locked }: { step: Extract<Step, { kind: "type
           spellCheck={false}
           lang="es"
           enterKeyHint="done"
-          placeholder="Escribe en español"
+          placeholder={step.question ? "Tu respuesta" : "Escribe en español"}
           className="card min-h-16 w-full px-5 text-[19px] font-semibold text-espresso outline-none placeholder:font-normal placeholder:text-pebble focus:border-terra"
         />
-        <p className="mt-3 px-1 text-[13px] leading-[18px] text-pebble">Sin acentos también vale.</p>
         <BottomBar><Primary disabled={!v.trim() || locked} onClick={check}>Comprobar</Primary></BottomBar>
       </form>
     </>
@@ -357,13 +394,12 @@ function SayStep({ step, onNext }: { step: Extract<Step, { kind: "say" }>; onNex
           </div>
         </MushroomSays>
       )}
-      <div className="flex flex-col gap-2">
-        {/* when Mushroom already speaks in the balloon above, the heading goes without him */}
-        {step.cue && <Buddy.Provider value={step.hear ? null : "curious"}><Heading>{step.cue}</Heading></Buddy.Provider>}
-        <p className="flex items-center gap-2 font-label text-[14px] font-semibold text-pebble">
-          <Mic className="size-4 text-canela-deep" /> Contesta en voz alta.
-        </p>
-      </div>
+      {step.cue && (
+        <div className="flex items-start gap-3 rounded-[1.25rem] bg-crema-mid px-5 py-4">
+          <MessageCircle className="mt-0.5 size-5 shrink-0 text-canela-deep" aria-hidden />
+          <p className="text-[17px] font-semibold leading-6 text-espresso">{step.cue}</p>
+        </div>
+      )}
       {step.frame && <p className="rounded-[1.25rem] border border-dashed border-sand-deep px-5 py-4 text-[17px] font-semibold leading-6 text-pebble">{step.frame}</p>}
       {revealed && step.target && (
         <div className="card flex animate-[pop_400ms_var(--ease-out-expo)] items-center gap-3 border-agave/25 bg-agave-wash p-5">
@@ -415,7 +451,7 @@ function WriteStep({ step, onNext }: { step: Extract<Step, { kind: "write" }>; o
   const [shown, setShown] = useState(false);
   return (
     <>
-      <Heading>{step.prompt}</Heading>
+      {step.prompt && <p className="text-[17px] font-semibold leading-6 text-espresso">{step.prompt}</p>}
       {step.incoming && (
         <div className="self-start rounded-[1.25rem] rounded-bl-md bg-white px-4 py-3 text-[17px] leading-[26px] text-espresso shadow-[var(--shadow-card)]">{step.incoming}</div>
       )}
@@ -465,7 +501,6 @@ function RateStep({ step, onNext }: { step: Extract<Step, { kind: "rate" }>; onN
   const [sel, setSel] = useState<string | null>(null);
   return (
     <>
-      <Heading>{step.prompt}</Heading>
       <div className="flex flex-wrap gap-2.5">
         {opts.map((o) => (
           <button

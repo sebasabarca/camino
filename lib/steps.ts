@@ -8,7 +8,7 @@ export type Step =
   | { kind: "listen"; id: string; lines?: Line[]; text?: string; reveal: "always" | "after"; prompt?: string }
   | { kind: "learn"; id: string; note?: string; noticing?: string; examples: { es: string; en?: string }[] }
   | { kind: "choice"; id: string; q: string; qEs: boolean; choices: string[]; answer: string; feedback: Feedback; hear?: Line[] }
-  | { kind: "type"; id: string; cue: string; answer: string; keys: string[]; feedback: Feedback }
+  | { kind: "type"; id: string; cue: string; answer: string; keys: string[]; feedback: Feedback; question?: boolean }
   | { kind: "say"; id: string; hear?: Line[]; cue?: string; target?: string; keys: string[]; frame?: string; selfCheck: string[]; feedback: Feedback }
   | { kind: "write"; id: string; prompt: string; incoming?: string; model?: string; checklist: string[] }
   | { kind: "rate"; id: string; prompt: string; options: { id: string; es: string; en: string }[] };
@@ -27,7 +27,14 @@ function lines(d: Obj, speakers: Record<string, string>): Line[] | undefined {
 }
 
 function questions(d: Obj, hear?: Line[]): Step[] {
-  return arr(d.questions)
+  // open questions (no choices) are asked as a short typed answer rather than dropped
+  const open = arr(d.questions)
+    .filter((q) => !strs(q.choices).length && str(q.answer) && str(q.q))
+    .map((q): Step => ({
+      kind: "type", id: str(q.id)!, cue: str(q.q)!, question: true,
+      answer: str(q.answer)!, keys: [str(q.answer)!, ...strs(q.accepted_answers)], feedback: (q.feedback as Feedback) ?? {},
+    }));
+  const closed = arr(d.questions)
     .filter((q) => strs(q.choices).length && str(q.answer))
     .map((q) => ({
       kind: "choice" as const,
@@ -39,6 +46,7 @@ function questions(d: Obj, hear?: Line[]): Step[] {
       feedback: (q.feedback as Feedback) ?? {},
       hear,
     }));
+  return [...closed, ...open];
 }
 
 function cues(d: Obj, spoken: boolean): Step[] {
@@ -100,7 +108,7 @@ function fromData(id: string, type: string, response: string, d: Obj, speakers: 
     const first = ls?.filter((l) => l.text.trim().endsWith("?")).slice(0, 1);
     steps.push({
       kind: "say", id, hear: first?.length ? first : undefined,
-      cue: str(d.on_screen_en) ?? str(d.prompt_en) ?? "Ahora tú. Contesta como en el modelo.",
+      cue: str(d.on_screen_en) ?? str(d.prompt_en), // the heading already says "answer out loud"
       frame: str(d.frame) ?? str(d.on_screen_es),
       target: str(d.expected_response),
       keys: strs(d.accepted_responses),
