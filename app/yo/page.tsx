@@ -1,22 +1,23 @@
-import { BookOpenText, Clock3, Flag, Sun } from "lucide-react";
+import Link from "next/link";
+import { BookOpenText, Brain, Flag, GraduationCap, Target } from "lucide-react";
 import { learnerStats } from "@/lib/course";
 import { Mushroom } from "@/components/mushroom";
 import { SpeedSetting } from "@/components/say-it";
 
 export const dynamic = "force-dynamic";
 
-// Her page: plain facts about what she has done, and how the app talks to her. Nothing here can be lost.
+// Her page: plain facts about what she has done, and how the app talks to her. Nothing here can be lost:
+// no streaks; the daily goal starts fresh each day and missing it costs nothing.
 export default function Yo() {
   const s = learnerStats();
-  const hours = Math.floor(s.minutes / 60);
-  // session length by plan, not measured time, hence "unos"
-  const time = s.minutes === 0 ? "Aún nada" : hours ? `unas ${Math.round(s.minutes / 60)} h` : `unos ${s.minutes} min`;
   const rows = [
-    { icon: Sun, label: "Sesiones terminadas", value: String(s.sessionsDone), tint: "text-canela" },
-    { icon: Clock3, label: "Tiempo de sesiones", value: time, tint: "text-terra" },
-    { icon: Flag, label: "Metas alcanzadas", value: `${s.goals} de ${s.totalGoals}`, tint: "text-agave" },
-    { icon: BookOpenText, label: "Frases que conoces", value: String(s.phrases), tint: "text-terra-deep" },
+    { icon: GraduationCap, label: "Lecciones terminadas", value: String(s.lessons), tint: "text-terra" },
+    { icon: BookOpenText, label: "Palabras y frases", value: String(s.phrases), tint: "text-terra-deep" },
+    { icon: Target, label: "Respuestas a la primera", value: s.firstTry == null ? "—" : `${s.firstTry} %`, tint: "text-canela" },
+    { icon: Flag, label: "Unidades superadas", value: `${s.passed} de ${s.totalUnits}`, tint: "text-agave" },
+    ...(s.remembered ? [{ icon: Brain, label: "Recordadas semanas después", value: String(s.remembered), tint: "text-agave-deep" }] : []),
   ];
+  const met = s.lessonsToday >= 1;
 
   return (
     <div className="px-5 pb-28 pt-[max(env(safe-area-inset-top),1.25rem)]">
@@ -27,6 +28,22 @@ export default function Yo() {
           <p className="text-[15px] leading-[22px] text-pebble">North Vancouver · aprendiendo español</p>
         </div>
       </div>
+
+      <section aria-labelledby="hoy" className={`mt-8 rounded-[1.5rem] px-5 py-4 ${met ? "bg-agave-wash" : "bg-canela-wash"}`}>
+        <h2 id="hoy" className={`text-[19px] font-bold leading-7 ${met ? "text-agave-deep" : "text-canela-deep"}`}>
+          {met ? "Meta de hoy cumplida" : "Meta de hoy: una lección"}
+        </h2>
+        <p className="mt-0.5 text-[15px] leading-[22px] text-espresso">
+          {met
+            ? `${s.lessonsToday} ${s.lessonsToday === 1 ? "lección" : "lecciones"} hoy. Lo demás es extra.`
+            : "Unos seis minutos. Si hoy no puedes, no pasa nada."}
+        </p>
+        {!met && (
+          <Link href="/" className="mt-3 inline-flex min-h-11 items-center rounded-full bg-white px-4 font-label text-[14px] font-bold text-terra-deep shadow-[var(--shadow-card)]">
+            Ir al camino
+          </Link>
+        )}
+      </section>
 
       <section aria-labelledby="hecho" className="mt-8">
         <h2 id="hecho" className="text-[20px] font-bold leading-7 tracking-[-0.01em] text-espresso">Lo que llevas</h2>
@@ -43,7 +60,7 @@ export default function Yo() {
 
       <section aria-labelledby="voz" className="mt-8">
         <h2 id="voz" className="text-[20px] font-bold leading-7 tracking-[-0.01em] text-espresso">Voz</h2>
-        <p className="mt-1 text-[15px] leading-[22px] text-pebble">Cómo te hablan Mushroom y los demás. Puedes cambiarlo en cada audio.</p>
+        <p className="mt-1 text-[15px] leading-[22px] text-pebble">La velocidad de la voz cuando tocas el altavoz.</p>
         <div className="mt-3"><SpeedSetting /></div>
       </section>
     </div>

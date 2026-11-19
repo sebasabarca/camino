@@ -21,10 +21,11 @@ Built around one real learner rather than an average user: the lessons use her r
 
 ## Operating Context
 
-- Each unit has 5 sessions; each session is a short run of activities: listening and reading with questions, explanations with examples, typed recall, guided speaking, unpredictable prompts, writing, a self-rating, and a unit check (plus a delayed check about 3–4 weeks later).
+- **Teach, then quiz (since 2026-11-18, after talking to Serena).** She memorizes well but needs material taught properly: each short lesson (about 6 minutes) first explains a few words, a rule or a conjugation in a line or two, then quizzes them Duolingo-style (choose the meaning, match pairs, build the sentence from tiles, fill the gap, conjugate, translate), recognition first, production last. No dialogues or listening tasks; tap-to-hear is optional. Each unit ends with a unit check (and a delayed check about 3–4 weeks later).
+- All units are in this format. Help during a quiz (reopening the card, tapping a word for its meaning, marked letters on near misses), spaced review in "Practicar", and a delayed check a few weeks after each unit.
 - Answers are checked leniently on accents ("Que hora es" is fine); ñ stays distinct from n. Speaking and writing are self-checked in the app and scored later by a person.
 - Audio is not recorded yet; the browser's built-in Spanish voices read the scripts for now.
-- Content comes from the course pipeline (`../pipeline`) as a read-only SQLite file; learner progress is stored separately.
+- Content comes from the course pipeline (a separate local pipeline, not in this repo) as a read-only SQLite file; learner progress is stored separately.
 
 ## Capabilities and Constraints
 
@@ -39,7 +40,7 @@ Built around one real learner rather than an average user: the lessons use her r
 
 ## Evidence on Hand
 
-- Pilot content: 6 finalized units (`p0-sounds-01`, `p0-u01`, `a1-u01`…`a1-u04`) with unit checks.
+- Content: the 6 pilot units plus A1 and A2 in progress, all finalized units with unit checks (`p0-sounds-01`, `p0-u01`, `a1-u01`…`a1-u04`) with unit checks.
 - Visual reference supplied by the owner: "Sol & Sombra" DESIGN.md, 7 mock screens and the Mushroom sticker sheet (`design/reference/`).
 - No testimonials, metrics or learner results exist yet; don't invent any.
 
@@ -48,7 +49,7 @@ Built around one real learner rather than an average user: the lessons use her r
 1. Her real life, not a template: content and examples are about Serena; never invent facts about her.
 2. Conversation over completion: progress means she can do the can-do statement, not that she tapped through.
 3. Patient, never punitive: mistakes get a hint and another go; there is nothing to lose.
-4. Meaning first, then form: listen and understand before producing; support fades as she improves.
+4. Teach, then test: nothing is quizzed before it has been explained; explanations are short and plain; quizzes move from recognizing to producing.
 
 ## Accessibility & Inclusion
 

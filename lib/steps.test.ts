@@ -2,28 +2,60 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import Database from "better-sqlite3";
-import { buildSteps } from "./steps.ts";
 
-const db = new Database("data/course.db", { readonly: true });
+const db = new Database(process.env.COURSE_DB ?? "data/course.db", { readonly: true });
 
-test("every pilot activity becomes at least one well-formed step", () => {
-  const acts = db.prepare("SELECT id, unit_id, type, response_type, data FROM activities").all() as
-    { id: string; unit_id: string; type: string; response_type: string; data: string }[];
+test("every lesson-format activity becomes teach cards, then well-formed exercises", async () => {
+  const { lessonSteps } = await import("./lesson-steps.ts");
+  const { matches } = await import("./answer.ts");
+  const acts = db.prepare("SELECT a.id, a.data FROM activities a JOIN units u ON u.id = a.unit_id WHERE u.format = 'lessons' AND a.type = 'lesson'").all() as
+    { id: string; data: string }[];
   const kinds: Record<string, number> = {};
   for (const a of acts) {
     const data = JSON.parse(a.data);
-    const checkItems = a.type === "unit_check"
-      ? (db.prepare("SELECT id, skill, data FROM check_items WHERE check_id = ? ORDER BY ord").all(data.assessment_ref) as { id: string; skill: string; data: string }[])
-          .map((c) => ({ ...c, data: JSON.parse(c.data) }))
-      : [];
-    const steps = buildSteps({ ...a, data }, {}, [{ id: "x", spanish: "hola", gloss: "hi" }], checkItems);
-    assert.ok(steps.length > 0, `${a.id} has no steps`);
+    const steps = lessonSteps(a.id, data);
+    const exercises = (data.exercises ?? []).length;
+    assert.equal(steps.filter((s) => s.kind !== "teach").length, exercises, `${a.id}: an exercise was dropped`);
+    const firstQuiz = steps.findIndex((s) => s.kind !== "teach");
+    assert.ok(steps.slice(firstQuiz).every((s) => s.kind !== "teach"), `${a.id}: teach card after the quiz started`);
     for (const s of steps) {
-      assert.ok(s.id, `${a.id}: step without id`);
       kinds[s.kind] = (kinds[s.kind] ?? 0) + 1;
-      if (s.kind === "choice") assert.ok(s.choices.includes(s.answer), `${s.id}: answer not among choices`);
-      if (s.kind === "type") assert.ok(s.keys.length > 0, `${s.id}: no keys`);
+      if (s.kind === "pick") assert.ok(s.choices.includes(s.answer), `${s.id}: answer not among choices`);
+      if (s.kind === "fill") assert.ok(matches(s.answer, s.keys), `${s.id}: own answer rejected`);
+      // the answer must be buildable from the tile bank, and the checker must accept it
+      if (s.kind === "tiles") {
+        const bank = [...s.bank];
+        const built = s.answer.split(/\s+/).map((w) => w.replace(/[¿?¡!.,;:"“”]/g, "")).filter(Boolean);
+        for (const w of built) {
+          const i = bank.indexOf(w);
+          assert.ok(i >= 0, `${s.id}: tile “${w}” missing`);
+          bank.splice(i, 1);
+        }
+        assert.ok(matches(built.join(" "), s.keys), `${s.id}: tiles answer rejected by the checker`);
+      }
     }
   }
-  console.log(acts.length, "activities →", kinds);
+  console.log(acts.length, "lessons →", kinds);
+});
+
+test("every lesson-format unit check becomes exercises, one per item", async () => {
+  const { checkSteps } = await import("./lesson-steps.ts");
+  const checks = db.prepare("SELECT c.id FROM checks c JOIN units u ON u.id = c.unit_id WHERE u.format = 'lessons'").all() as { id: string }[];
+  for (const c of checks) {
+    const items = (db.prepare("SELECT id, data FROM check_items WHERE check_id = ? ORDER BY ord").all(c.id) as { id: string; data: string }[])
+      .map((r) => ({ id: r.id, data: JSON.parse(r.data) }));
+    assert.equal(checkSteps(items).length, items.length, `${c.id}: an item was dropped`);
+  }
+});
+
+test("every delayed unit check becomes exercises, one per item", async () => {
+  const { checkSteps } = await import("./lesson-steps.ts");
+  const checks = db.prepare("SELECT c.id FROM checks c JOIN units u ON u.id = c.unit_id WHERE c.kind = 'delayed' AND u.format = 'lessons'").all() as { id: string }[];
+  assert.ok(checks.length > 0, "no delayed checks exported");
+  for (const c of checks) {
+    const items = (db.prepare("SELECT id, data FROM check_items WHERE check_id = ? ORDER BY ord").all(c.id) as { id: string; data: string }[])
+      .map((r) => ({ id: r.id, data: JSON.parse(r.data) }));
+    const steps = checkSteps(items);
+    assert.equal(steps.length, items.length, `${c.id}: some items did not become exercises`);
+  }
 });

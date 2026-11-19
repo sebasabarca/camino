@@ -9,10 +9,11 @@ const TABS: { href: string; label: string; icon: LucideIcon; match: (p: string) 
   { href: "/yo", label: "Yo", icon: UserRound, match: (p) => p.startsWith("/yo") },
 ];
 
-/** Bottom navigation. Hidden inside a lesson and on its summary: those screens own the bottom for their one action. */
+/** Bottom navigation. Hidden in lessons, practice, checks, their summaries and the login: those screens own the bottom. */
 export function TabBar() {
   const path = usePathname();
-  if (path.startsWith("/learn/") || path.startsWith("/session/")) return null;
+  const own = ["/learn/", "/session/", "/login", "/practicar", "/prueba/"];
+  if (own.some((p) => path.startsWith(p))) return null;
   return (
     <nav
       aria-label="Principal"

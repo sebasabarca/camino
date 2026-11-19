@@ -8,7 +8,7 @@ const inter = Inter({ variable: "--font-inter", subsets: ["latin"], weight: ["50
 
 export const metadata: Metadata = {
   title: "Camino con Mushroom",
-  description: "Serena's Spanish course, one conversation at a time.",
+  description: "Serena's Spanish course: short lessons, then a quiz.",
   appleWebApp: { capable: true, title: "Camino", statusBarStyle: "default" },
 };
 

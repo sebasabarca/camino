@@ -8,10 +8,12 @@ export const dynamic = "force-dynamic";
 
 export default async function UnitPage({ params }: { params: Promise<{ unitId: string }> }) {
   const { unitId } = await params;
-  const { units } = courseState();
+  const { units, delayed } = courseState();
   const unit = units.find((u) => u.id === unitId);
   if (!unit) notFound();
   const nowId = unit.sessions.find((s) => !s.complete)?.id;
+  const memory = delayed.find((d) => d.unit_id === unit.id);
+  const days = memory ? Math.max(1, Math.ceil((memory.dueAt - Date.now()) / 86_400_000)) : 0;
 
   return (
     <div className="pb-28">
@@ -25,7 +27,7 @@ export default async function UnitPage({ params }: { params: Promise<{ unitId: s
         <h1 className="text-balance text-[28px] font-extrabold leading-9 tracking-[-0.02em] text-espresso">{unit.title}</h1>
         <p className="mt-2 text-[17px] leading-[26px] text-pebble">{unit.goal}</p>
         <p className="mt-3 font-label tabular text-[13px] font-semibold text-pebble">
-          {unit.sessions.filter((s) => s.complete).length} de {unit.sessions.length} sesiones · unos {unit.sessions[0]?.minutes ?? 35} min cada una
+          {`${unit.sessions.filter((s) => s.complete).length} de ${unit.sessions.length} lecciones · unos ${unit.sessions[0]?.minutes ?? 6} min cada una`}
         </p>
 
         <ol className="mt-6 flex flex-col gap-3">
@@ -62,11 +64,21 @@ export default async function UnitPage({ params }: { params: Promise<{ unitId: s
           })}
         </ol>
 
+        {memory && (
+          <p className="mt-6 rounded-[1.25rem] bg-agave-wash px-4 py-3 text-[15px] leading-[22px] text-agave-deep">
+            {memory.done
+              ? "Repaso de memoria hecho: lo recordaste semanas después."
+              : memory.due
+                ? <Link href={`/prueba/${memory.id}`} className="font-bold underline underline-offset-4">Repaso de memoria listo: ¿aún lo recuerdas?</Link>
+                : `Repaso de memoria en ${days} ${days === 1 ? "día" : "días"}: unas preguntas para ver si lo recuerdas.`}
+          </p>
+        )}
+
         <div className="mt-8">
           <MushroomSays mood={unit.complete ? "proud" : "teaching"}>
             {unit.complete
               ? "Unidad terminada. Repasa cuando quieras; yo me encargo de la comida."
-              : "Una sesión al día basta. Si hoy hay poco tiempo, haz solo la primera parte."}
+              : "Primero te explico, luego te pregunto. Lo que falles vuelve al final. Sin prisa."}
           </MushroomSays>
         </div>
       </div>

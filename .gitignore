@@ -39,3 +39,17 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# data: learner progress and its backups are private and never committed.
+# course.db (read-only content built by the course pipeline) IS committed so the server can deploy from git.
+/data/*
+!/data/course.db
+*.db-journal
+*.db-wal
+*.db-shm
+
+# local tool caches
+.impeccable/hook.cache.json
+
+# but keep the template
+!.env.example
