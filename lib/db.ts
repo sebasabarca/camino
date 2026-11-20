@@ -354,3 +354,10 @@ export function progressAttempts(learnerId: string) {
   return progress().prepare(`SELECT target_id, answer, correct, created_at FROM attempts WHERE learner_id = ? ORDER BY id`).all(learnerId) as
     { target_id: string; answer: string | null; correct: number; created_at: string }[];
 }
+
+// ---------- health ----------
+/** Both databases open and answer a trivial query (Docker health check, /api/health). Throws if not. */
+export function healthCheck() {
+  course().prepare("SELECT 1").get();
+  progress().prepare("SELECT 1").get();
+}

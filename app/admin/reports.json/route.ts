@@ -1,6 +1,6 @@
 import { listReports } from "@/lib/db";
 import { LEARNER } from "@/lib/learner";
-import { isOwner } from "@/lib/owner";
+import { isOwner } from "@/lib/session";
 
 export const dynamic = "force-dynamic";
 

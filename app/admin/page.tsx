@@ -2,7 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Download, LogOut } from "lucide-react";
 import { adminData } from "@/lib/admin";
-import { isOwner } from "@/lib/owner";
+import { isOwner } from "@/lib/session";
 import { logout } from "@/app/login/actions";
 import { setReport } from "./actions";
 

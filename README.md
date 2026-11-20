@@ -10,7 +10,7 @@ nvm use                  # Node 24 (.nvmrc); Tailwind 4 needs Node >= 20.19
 npm install
 cp .env.example .env.local   # then fill in the three values
 npm run dev              # http://localhost:3000
-node --test lib/answer.test.ts lib/steps.test.ts
+node --test lib/answer.test.ts lib/steps.test.ts lib/login-guard.test.ts
 ```
 
 ## Data
@@ -25,9 +25,5 @@ node --test lib/answer.test.ts lib/steps.test.ts
 
 ## Deploy
 
-1. On the server: `git clone`, `npm ci`, `npm run build`.
-2. Set `APP_PASSWORD`, `OWNER_PASSWORD` (≥ 8 chars) and `AUTH_SECRET` (≥ 32 chars). Without them production returns 503.
-3. Set `DATA_DIR` to a persistent directory **outside** the checkout, so progress survives redeploys.
-4. Serve behind HTTPS (the session cookie is marked secure when `x-forwarded-proto` is https): `npm start -- -p 3000`.
-5. Content updates: re-export `course.db`, commit, push, then `git pull && npm run build` on the server and restart.
-6. Copy `$DATA_DIR/backups/` off the server now and then.
+Docker behind an existing Caddy: see **`DEPLOY.md`**. That covers the environment variables, the first deployment,
+updates, rollback and backups. Files: `Dockerfile`, `.dockerignore`, `compose.yaml`.

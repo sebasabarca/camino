@@ -11,7 +11,7 @@ nvm use            # Node 24 (.nvmrc). Tailwind 4 needs Node >= 20.19
 npm install
 npm run dev        # http://localhost:3000
 npm run build      # typecheck + production build
-node --test lib/answer.test.ts lib/steps.test.ts
+node --test lib/answer.test.ts lib/steps.test.ts lib/login-guard.test.ts
 ```
 
 **This repo is only the app** (it is what goes to GitHub). Course content is made by a separate, local-only pipeline
@@ -26,6 +26,12 @@ can deploy from git. Never commit `progress.db`, `data/backups/` or `.env.local`
 - One learner (`lib/learner.ts`). **Login** (`middleware.ts`, `lib/auth.ts`): `APP_PASSWORD` (Serena), `OWNER_PASSWORD`
   (owner: also `/admin`) and `AUTH_SECRET` (≥ 32 chars) come from the environment (`.env.local` locally, git-ignored).
   A signed cookie lasts a year. Without them, dev is open and a production server refuses to run (503).
+  Server actions that write check the session again (`lib/session.ts` `requireSession`); keep that in every new one.
+  Login hardening is in `lib/login-guard.ts` (tested): `safeNext` (same-site return paths only), `clientIp`
+  (right-most X-Forwarded-For) and `LoginLimiter` (5 failures/IP, 30 overall, per 15 min). Redirects in
+  `middleware.ts` use `APP_ORIGIN` (or the forwarded host), never `req.url`, which is localhost behind the proxy.
+- **Deploy:** Docker behind the existing Caddy, see `DEPLOY.md` (`Dockerfile`, `compose.yaml`, standalone output).
+  `/api/health` is the unauthenticated health check.
 - **Backups:** `data/backups/progress-YYYY-MM-DD.db`, one a day (taken on first use that day), newest 30 kept. Copy
   them off the server now and then.
 

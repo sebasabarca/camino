@@ -1,0 +1,54 @@
+# Camino on a shared VPS. Runs on its own (its own compose project, container, volume and secrets) and is reached
+# only through the existing reverse proxy (Caddy) on an external Docker network. No port is published.
+#
+# Paths and names can be overridden from the shell or a .env file next to this one (see DEPLOY.md):
+#   CAMINO_ENV_FILE  secrets file (default /srv/camino/camino.env)      APP_PASSWORD, OWNER_PASSWORD, AUTH_SECRET
+#   CAMINO_DATA      host dir for progress.db + backups (default /srv/camino/data), owned by uid 1000
+#   PROXY_NETWORK    external network the proxy is also on (default proxy)
+#   CAMINO_TAG       image tag (default latest); tag builds with the git sha to roll back
+
+name: camino
+
+services:
+  camino:
+    build: .
+    image: camino:${CAMINO_TAG:-latest}
+    container_name: camino
+    restart: unless-stopped
+    init: true
+    env_file:
+      - ${CAMINO_ENV_FILE:-/srv/camino/camino.env}
+    environment:
+      # fixed here so the secrets file can't move progress over the bundled course content
+      NODE_ENV: production
+      DATA_DIR: /data
+    volumes:
+      - type: bind
+        source: ${CAMINO_DATA:-/srv/camino/data}
+        target: /data
+    expose:
+      - "3000"
+    networks:
+      - proxy
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3000/api/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 30s
+      timeout: 5s
+      start_period: 20s
+      retries: 3
+    mem_limit: 512m
+    cpus: 1.0
+    pids_limit: 256
+    cap_drop: [ALL]
+    security_opt:
+      - no-new-privileges:true
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+networks:
+  proxy:
+    name: ${PROXY_NETWORK:-proxy}
+    external: true
